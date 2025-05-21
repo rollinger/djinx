@@ -1,0 +1,3 @@
+include README.md
+recursive-include my_package/static *
+recursive-include my_package/templates *
