@@ -1,3 +1,5 @@
 include README.md
 recursive-include djinx/static *
 recursive-include djinx/templates *
+
+exclude example/*

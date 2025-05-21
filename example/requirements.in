@@ -1,0 +1,9 @@
+# Runtime
+-e ../djinx
+
+# Django LTS
+Django==4.2.7
+
+# Dev tools
+black==23.3.0
+flake8==6.0.0

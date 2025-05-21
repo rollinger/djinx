@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Django stuff:
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# Package build artifacts
+*.egg-info/
+dist/
+build/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Testing
+.coverage
+.tox/
+.nox/
+.cache/
+.pytest_cache/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Mac and Linux hidden files
+.DS_Store
+Thumbs.db
+
+# Local environment variables
+.env
+.env.*
+
+# mypy, pyright
+.mypy_cache/
+.pyright/
+
+# Wheel files
+*.whl
+
+# pip-tools
+requirements.txt
+
+# Example project DB and media
+example/db.sqlite3
+example/media/
