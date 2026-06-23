@@ -2,7 +2,7 @@
 
 ![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)
 
-**Django and HTMX Integration from a Widget Perspective.**
+**Django - HTMX Integration.**
 
 ---
 
@@ -11,7 +11,7 @@
 **Djinx** is a Django package that provides seamless integration between Django form widgets and [HTMX](https://htmx.org/). It aims to reduce boilerplate and promote clean, component-like behavior in your views and templates.
 
 Use it to:
-- Add HTMX behavior to Django forms declaratively.
+- Add HTMX behavior to Django view declaratively.
 - Simplify progressive enhancement in your app.
 - Avoid repetitive HTML/JS when building dynamic, interactive UIs.
 
