@@ -24,5 +24,5 @@ from .views.djinx import MyDjinxBattery
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", TemplateView.as_view(template_name="index.html"), name="home"),
-    path("dxe/", include(MyDjinxBattery.router())),
+    path("dx/", include(MyDjinxBattery.router())),
 ]
