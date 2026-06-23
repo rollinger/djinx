@@ -6,6 +6,8 @@ See: https://ccbv.co.uk/projects/Django/5.2/django.views.generic.base/View/
 """
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponseNotAllowed
+from django.template import Template, RequestContext
+from django.http import HttpResponse
 
 from .parser import compile_section_dict
 from django.urls import path
@@ -18,7 +20,7 @@ class DjinxEndpointMixin:
     def __init__(self, **kwargs):
         """Constructor builds the dx section template."""
         if self.dx_section_template is None:
-            raise ImproperlyConfigured("Must set a template")
+            raise ImproperlyConfigured("Must set a dx-section template")
         self.build_dx_sections()
 
     def build_dx_sections(self) -> None:
@@ -27,9 +29,17 @@ class DjinxEndpointMixin:
 
     def get_template_section(self, name: str) -> str:
         """Returns the dx-section template for this view.
-        If name cannot be found, returns an empty string.
+        If name cannot be found, returns empty string.
         """
         return self._dx_section_dict.get(name, "")
+
+    def render_section(self, request, section_name, context=None):
+        """Render a dx-section as a full HTTP response."""
+        if context is None:
+            context = {}
+        raw_html = self.get_template_section(section_name)
+        template = Template(raw_html)
+        return HttpResponse(template.render(RequestContext(request, context)))
 
     @classmethod
     def router(cls):

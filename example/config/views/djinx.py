@@ -1,17 +1,15 @@
-from django.shortcuts import render
-
 from .base import DjinxEndpointMixin
 from .route import route
 
 TEMPLATE = """
 <dx-section name="agreement">
     <div>Read this before confirm</div>
-    <div hx-get="get-check-button" hx-trigger="revealed" hx-swap="outerHTML">Loading...</div>
+    <div hx-get="dx/get-check-button" hx-trigger="revealed delay:1s" hx-swap="outerHTML">Loading...</div>
 </dx-section>
 
 <dx-section name="check-button">
-    <button hx-post="confirm">
-        Confirm
+    <button hx-post="/dx/confirm">
+        Confirm, {{ name }}
     </button>
 </dx-section>
 
@@ -26,14 +24,16 @@ class MyDjinxBattery(DjinxEndpointMixin):
 
     @route("agreement", methods=["GET"])
     def agreement(self, request):
-        return render(request, self.get_template_section("agreement"))
+        return self.render_section(request, "agreement")
 
     @route("get-check-button", methods=["GET"])
     def get_check_button(self, request):
-        context = {}
-        return render(request, self.get_template_section("check-button"), context)
+        context = {"name": "Phil"}
+        return self.render_section(
+            request, section_name="check-button", context=context
+        )
 
-    @route("confirm", methods=["POST"])
+    @route("confirm", methods=["PUT", "POST"])
     def confirm(self, request):
         context = {}
-        return render(request, self.get_template_section("check-confirmed"), context)
+        return self.render_section(request, "check-confirmed", context)
