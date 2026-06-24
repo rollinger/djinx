@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from .views.djinx import MyDjinxBattery
+from .views import MyDjinxBattery
 
 urlpatterns = [
     path("admin/", admin.site.urls),

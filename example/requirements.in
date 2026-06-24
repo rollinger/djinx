@@ -1,5 +1,5 @@
 # Runtime
--e ../djinx
+-e ../djxi
 
 # Django LTS
 Django==4.2.7

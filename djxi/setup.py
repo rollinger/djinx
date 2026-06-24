@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="djinx",
+    name="djxi",
     version="0.1",
     author="Philipp Rollinger",
     author_email="philipp.rollinger@protonmail.com",

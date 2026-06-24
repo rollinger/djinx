@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class MyPackageConfig(AppConfig):
-    name = "djinx"
-    verbose_name = "Djinx"
+    name = "djxi"
+    verbose_name = "djxi"
