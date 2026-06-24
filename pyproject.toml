@@ -13,7 +13,7 @@ authors = [
     { name = "Philipp Rollinger", email = "philipp.rollinger@protonmail.com" }
 ]
 dependencies = [
-    "requests>=2.28.0",
+    "django>=4.2",
 ]
 
 [project.optional-dependencies]
@@ -23,5 +23,5 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/mypackage"
-Repository = "https://github.com/yourusername/mypackage.git"
+Homepage = "https://github.com/rollinger/djxi"
+Repository = "https://github.com/rollinger/djxi"
