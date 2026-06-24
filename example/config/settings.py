@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
     # Showcase Django HTMX Integration
     "djxi",
+    "showcases",
 ]
 
 MIDDLEWARE = [

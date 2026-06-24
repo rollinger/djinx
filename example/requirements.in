@@ -1,10 +1,11 @@
 # Djxi - with `pip install -e .`
--e djxi
+-e ../
 
 # Django LTS
 Django==4.2.7
 
 # Dev tools
+django-extensions==4.1
 black==23.3.0
 flake8==6.0.0
 pre-commit

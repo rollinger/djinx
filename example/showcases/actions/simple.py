@@ -3,11 +3,11 @@ from djxi.actions import DxActionRouter, dx_route
 TEMPLATE = """
 <dx-section name="agreement">
     <div>Read this before confirm</div>
-    <div hx-get="dx/get-check-button" hx-trigger="revealed delay:1s" hx-swap="outerHTML">Loading...</div>
+    <div hx-get="/showcase/simple/get-check-button" hx-trigger="revealed delay:1s" hx-swap="outerHTML">Loading...</div>
 </dx-section>
 
 <dx-section name="check-button">
-    <button hx-post="/dx/confirm">
+    <button hx-post="/showcase/simple/confirm">
         Confirm, {{ name }}
     </button>
 </dx-section>
@@ -18,7 +18,7 @@ TEMPLATE = """
 """
 
 
-class MyDjinxBattery(DxActionRouter):
+class SimpleInlineActionRouter(DxActionRouter):
     inline_template = TEMPLATE
 
     @dx_route("agreement", methods=["GET"])

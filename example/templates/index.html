@@ -1,8 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Djinx - Django HTMX Integration{% endblock %}
+{% block title %}Djxi - Django HTMX Integration{% endblock %}
 
 {% block content %}
-    <p>Lorem ipsum dolor ... </p>
-    <div hx-get="/dx/agreement" hx-trigger="load"></div>
+    <h2>Djxi - Django HTMX Integration</h2>
+    <p>
+        <b>Stop hunting for HTMX endpoints.</b>
+        Djxi bundles the route, the view logic, and the HTML partial into a single <b>Endpoint Battery</b>.
+        Drop the <code>DxActionRouter</code> into your existing Django views or use it standalone. Keep every tiny <code>hx-*</code> swap
+        exactly where it lives—without scattering your code across <code>urls.py</code>, <code>views/</code>, and <code>templates/</code>.
+        <ul>
+            <li><b>No more archaeology.</b> No more digging through three files just to tweak a button label.</li>
+            <li><b>LoB, restored.</b> Request → Logic → Render stays in one atomic, inline hub.  </li>
+            <li><b>Scales cleanly.</b> Small partials stay manageable, without turning your project into spaghetti.</li>
+        </ul>
+    </p>
+    <blockquote>
+        Just a prenup between Grandpa Django and his sexy new HTMX fling—keeping your repo clean, one battery at a time.
+    </blockquote>
+    <a href="{% url 'showcases:list' %}">Showcases</a>
+    <div hx-get="/showcase/simple/agreement" hx-trigger="load"></div>
 {% endblock %}
