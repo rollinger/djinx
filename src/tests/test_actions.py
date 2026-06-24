@@ -15,7 +15,7 @@ class MyDxActionBattery(DjxiActionsMixin):
     dx_section_template = TEMPLATE
 
 
-def test_dx_view_mixin_build_sections():
+def test_djxi_actions_build_sections():
     dxview = MyDxActionBattery()
     assert len(dxview._dx_section_dict) == 3
     assert dxview.get_template_section("a-b") == "AB"
