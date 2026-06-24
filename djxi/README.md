@@ -34,3 +34,6 @@ Locality of Behaviour is the principle that:
 
     "The behaviour of a unit of code should be as obvious as possible 
     by looking only at that unit of code"
+
+Base Generic Class Views
+See: https://ccbv.co.uk/projects/Django/5.2/django.views.generic.base/View/

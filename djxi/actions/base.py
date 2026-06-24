@@ -1,9 +1,3 @@
-"""
-Base Generic Class Views
-
-inspired by Django's generic views.
-See: https://ccbv.co.uk/projects/Django/5.2/django.views.generic.base/View/
-"""
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponseNotAllowed
 from django.template import Template, RequestContext
@@ -13,7 +7,7 @@ from .parser import compile_section_dict
 from django.urls import path
 
 
-class DjinxEndpointMixin:
+class DjxiActionsMixin:
     # TODO: Alternative template_name.html
     dx_section_template = None
 
