@@ -1,5 +1,6 @@
-# Runtime
--e ../djxi
+# example/requirements.in
+-e ../src/djxi
+-r ../requirements.in
 
 # Django LTS
 Django==4.2.7

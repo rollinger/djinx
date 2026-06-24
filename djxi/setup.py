@@ -1,18 +1,9 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
-setup(
-    name="djxi",
-    version="0.1",
-    author="Philipp Rollinger",
-    author_email="philipp.rollinger@protonmail.com",
-    packages=find_packages(),
-    include_package_data=True,
-    python_requires=">=3.10",
-    install_requires=[
-        "Django>=4.2,<4.3",  # Django 4.2 is the latest LTS
-    ],
-    classifiers=[
-        "Framework :: Django",
-        "Programming Language :: Python :: 3",
-    ],
-)
+if __name__ == "__main__":
+    # setup.cfg holds metadata and options. This minimal wrapper ensures
+    # setuptools will read setup.cfg when building wheels/sdist.
+    #
+    # Add custom build logic here later if needed (preprocessing, dynamic
+    # versioning, etc.) before calling setup().
+    setup()
