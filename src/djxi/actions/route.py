@@ -1,4 +1,4 @@
-def route(path: str, methods=None):
+def dx_route(path: str, methods=None):
     """
     Decorator to mark a class method as a URL endpoint.
     - path: URL path (can include Django path converters, e.g. '/items/<int:id>/')

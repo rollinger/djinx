@@ -1,31 +1,38 @@
-from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpResponseNotAllowed
-from django.template import Template, RequestContext
-from django.http import HttpResponse
-
-from .parser import compile_section_dict
 from django.urls import path
+from django.core.exceptions import ImproperlyConfigured
+from django.http import HttpResponse, HttpResponseNotAllowed
+from django.template import Template, RequestContext
+
+from .parser import SectionParser
 
 
-class DjxiActionsMixin:
+class DxActionRouter:
+    """Unify the Main User Loop into one class with many routed actions.
+    Main User Loop = Request->Route->Logic->Render->Response ...
+
+    1) define the dx_section_template
+    2) set up actions as class methods with the route decorator
+    3) hook the router into a url conf
+    """
+
     # TODO: Alternative template_name.html
     dx_section_template = None
 
     def __init__(self, **kwargs):
-        """Constructor builds the dx section template."""
+        """Constructor builds the dx section cache."""
         if self.dx_section_template is None:
-            raise ImproperlyConfigured("Must set a dx-section template")
-        self.build_dx_sections()
+            raise ImproperlyConfigured("Must set a djxi section template")
+        self.build_section_cache()
 
-    def build_dx_sections(self) -> None:
-        """Called on class initialization."""
-        self._dx_section_dict = compile_section_dict(self.dx_section_template)
+    def build_section_cache(self) -> None:
+        """On init builds the section cache. A dictionary with the (k,v) = name, html_string."""
+        self._dx_section_dict = self.parse_section_dict()
 
-    def get_template_section(self, name: str) -> str:
-        """Returns the dx-section template for this view.
-        If name cannot be found, returns empty string.
-        """
-        return self._dx_section_dict.get(name, "")
+    def parse_section_dict(self) -> dict:
+        """Parses the string and extract the dx-section parts."""
+        parser = SectionParser()
+        parser.feed(self.dx_section_template)
+        return parser.sections
 
     def render_section(self, request, section_name, context=None):
         """Render a dx-section as a full HTTP response."""
@@ -35,11 +42,17 @@ class DjxiActionsMixin:
         template = Template(raw_html)
         return HttpResponse(template.render(RequestContext(request, context)))
 
-    @classmethod
-    def router(cls):
+    def get_template_section(self, name: str) -> str:
+        """Returns the dx-section template string for this view.
+        If name cannot be found, returns empty string.
         """
-        Generate a list of Django URL patterns from all methods
-        decorated with @route.
+        return self._dx_section_dict.get(name, "")
+
+    @classmethod
+    def dx_router(cls) -> list:
+        """
+        Generate a list of Django URL patterns from all methods decorated with @route.
+        Use the class method to DxActionRouter.dx_router() in the url conf to hook the routes
         """
         patterns = []
 

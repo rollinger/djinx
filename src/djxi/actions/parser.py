@@ -46,12 +46,12 @@ class SectionParser(HTMLParser):
             self._chunks.append(f"<{tag}{attrs_str}/>")
 
 
-def compile_section_dict(html_string: str) -> dict:
-    """
-    Parse HTML containing <dx-section name="..."> ... </dx-section> blocks.
-    Returns a dict {name: inner_HTML} for each section.
-    Works with malformed HTML, unclosed tags, and multiple top‑level sections.
-    """
-    parser = SectionParser()
-    parser.feed(html_string)
-    return parser.sections
+# def compile_section_dict(html_string: str) -> dict:
+#     """
+#     Parse HTML containing <dx-section name="..."> ... </dx-section> blocks.
+#     Returns a dict {name: inner_HTML} for each section.
+#     Works with malformed HTML, unclosed tags, and multiple top‑level sections.
+#     """
+#     parser = SectionParser()
+#     parser.feed(html_string)
+#     return parser.sections

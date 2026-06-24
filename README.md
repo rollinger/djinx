@@ -85,8 +85,8 @@ Djxi is the memorandum of understanding between grandpa and his new crush.
 Django 1.0 Templating system alone tends to become unwieldy due to dispersed partials for DRY reasons.
 That is made worse by HTMX, since it adds the need to further fragment the html into smaller response snippets.
 Djxi introduces inline section templates which bundle a render domain in a single unified document.
-#### Unify the Main Sequence in one location (LoB-atomize)
-Main Sequence = Request->Route->Logic->Render->Response
+#### Unify the Main User Loop in one location (LoB-atomize)
+Main User Loop = Request->Route->Logic->Render->Response
 Lobatomize: Unify all aspects of the main sequence into ONE atomic hub/file maximizing LoB
 
 

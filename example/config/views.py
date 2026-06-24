@@ -1,5 +1,4 @@
-from djxi.actions.base import DjxiActionsMixin
-from djxi.actions.route import route
+from djxi.actions import DxActionRouter, dx_route
 
 TEMPLATE = """
 <dx-section name="agreement">
@@ -19,21 +18,21 @@ TEMPLATE = """
 """
 
 
-class MyDjinxBattery(DjxiActionsMixin):
+class MyDjinxBattery(DxActionRouter):
     dx_section_template = TEMPLATE
 
-    @route("agreement", methods=["GET"])
+    @dx_route("agreement", methods=["GET"])
     def agreement(self, request):
         return self.render_section(request, "agreement")
 
-    @route("get-check-button", methods=["GET"])
+    @dx_route("get-check-button", methods=["GET"])
     def get_check_button(self, request):
         context = {"name": "Phil"}
         return self.render_section(
             request, section_name="check-button", context=context
         )
 
-    @route("confirm", methods=["PUT", "POST"])
+    @dx_route("confirm", methods=["PUT", "POST"])
     def confirm(self, request):
         context = {}
         return self.render_section(request, "check-confirmed", context)
