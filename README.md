@@ -1,9 +1,56 @@
-# Djinx - HTMX Integration for Django
+# Djxi | **HTMX Integration for Django** 
+![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)
+
+---
+
+## 📦 What is this?
+
+**Djxi** is a Django package that provides seamless integration between Django form widgets and [HTMX](https://htmx.org/). It aims to reduce boilerplate and promote clean, component-like behavior in your views and templates.
+
+Use it to:
+- Add HTMX behavior to Django view declaratively.
+- Simplify progressive enhancement in your app.
+- Avoid repetitive HTML/JS when building dynamic, interactive UIs.
+
+---
+
+## 🚀 Installation
+
+### 1. Install via `pip`
+
+If published on PyPI:
+
+```bash
+pip install djinx
+```
+
+### 2. Add to your Django settings
+In settings.py:
+
+```python
+INSTALLED_APPS = [
+    ...
+    "djinx",
+]
+```
+
+### 3. Override Defaults (optional)
+In your project’s settings.py:
+
+```python
+DJINX_OPTION = "your_override"
+```
+
+# See Also: 
+- [HTMX](https://htmx.org/)
+- [Django HTMX](https://github.com/adamchainz/django-htmx)
+
+## Ramblings
 Django is a powerful web app framework build for reliable backend systems 
 while giving you freedom of choice for the frontend. However django frontend 
 defaults to server side rendered HTML.
 
-## Why bother?
+### Why bother?
 Introducing HTMX into a Django app, is easy and straightforward and works 
 well for small injection of `hx-*` into the templates with corresponding views
 that handle the request/response cycle.
@@ -18,7 +65,7 @@ in app/urls.py pointing to a htmx_view in app/views/hx_endpoints.py:htmx_view.
 This "endpoint hunting" may be justified for a GET the whole page, but for many small 
 htmx endpoints this gets chaotic and difficult to maintain.
 
-## Proposition
+### Proposition
 Imagine: 
 - you use Django the usual way url->view->template => entire page swap;
 - you define an Endpoint Battery bundling related actions, that is htmx endpoints
@@ -26,23 +73,21 @@ Imagine:
 - you can mix an endpoint battery into regular Django View upgrading the page with htmx.
 
 
-## Features
+### Features
 - DjinxViewMixin allows you to 
 
-## Reasons:
-### Make it easier for Django (web 1.0) to integrate with HTMX (web 2.5)
+### Reasons:
+#### Make it easier for Django (web 1.0) to integrate with HTMX (web 2.5)
 Django is the great, reliable grandpa. Does its thing very well and slow and unsexy.
 HTMX is the new sexy, agile but fragmented Post-Grad who likes to hookup with Grandpa.
 Djxi is the memorandum of understanding between grandpa and his new crush.
-### Reduce/manage the drag to dispersed partials.
+#### Reduce/manage the drag to dispersed partials.
 Django 1.0 Templating system alone tends to become unwieldy due to dispersed partials for DRY reasons.
 That is made worse by HTMX, since it adds the need to further fragment the html into smaller response snippets.
 Djxi introduces inline section templates which bundle a render domain in a single unified document.
-### Unify the Main Sequence in one location (LoB-atomize)
+#### Unify the Main Sequence in one location (LoB-atomize)
 Main Sequence = Request->Route->Logic->Render->Response
 Lobatomize: Unify all aspects of the main sequence into ONE atomic hub/file maximizing LoB
-
-
 
 
 Locality of Behaviour is the principle that:
