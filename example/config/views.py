@@ -1,5 +1,5 @@
-from sourcecode.djxi import DjinxEndpointMixin
-from sourcecode.djxi import route
+from djxi.actions.base import DjxiActionsMixin
+from djxi.actions.route import route
 
 TEMPLATE = """
 <dx-section name="agreement">
@@ -19,7 +19,7 @@ TEMPLATE = """
 """
 
 
-class MyDjinxBattery(DjinxEndpointMixin):
+class MyDjinxBattery(DjxiActionsMixin):
     dx_section_template = TEMPLATE
 
     @route("agreement", methods=["GET"])

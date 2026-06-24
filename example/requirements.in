@@ -1,5 +1,5 @@
-# example/requirements.in
--e ../
+# Djxi - with `pip install -e .`
+-e djxi
 
 # Django LTS
 Django==4.2.7
