@@ -1,5 +1,5 @@
-from src.djxi import DjinxEndpointMixin
-from src.djxi import route
+from sourcecode.djxi import DjinxEndpointMixin
+from sourcecode.djxi import route
 
 TEMPLATE = """
 <dx-section name="agreement">

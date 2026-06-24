@@ -1,5 +1,5 @@
 # example/requirements.in
--e ../src/djxi
+-e ../
 
 # Django LTS
 Django==4.2.7
