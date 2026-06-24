@@ -1,4 +1,4 @@
-from sourcecode.djxi import DjxiActionsMixin
+from djxi.actions.base import DjxiActionsMixin
 
 TEMPLATE = """
 <dx-section name="a-b">AB</dx-section><dx-section name="long spaced name">
