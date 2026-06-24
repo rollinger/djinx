@@ -19,7 +19,7 @@ TEMPLATE = """
 
 
 class MyDjinxBattery(DxActionRouter):
-    dx_section_template = TEMPLATE
+    inline_template = TEMPLATE
 
     @dx_route("agreement", methods=["GET"])
     def agreement(self, request):
