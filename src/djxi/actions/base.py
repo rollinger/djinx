@@ -12,7 +12,7 @@ class DxActionRouter:
 
     1) define the section template:
         a) inline_template = <dx-section name="identifier"> html for this section </dx-section>
-        b) template_name = path/to/template.html
+        b) template_name = path/to/template.html (app/template.html)
     2) set up actions as class methods with the route decorator
     3) hook the router into a url conf
     """
