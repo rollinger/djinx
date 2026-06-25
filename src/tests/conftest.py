@@ -1,3 +1,4 @@
+# python
 import django
 from django.conf import settings
 
@@ -5,12 +6,23 @@ from django.conf import settings
 if not settings.configured:
     settings.configure(
         SECRET_KEY="dummy-secret-for-testing",
-        ROOT_URLCONF="hello",  # will be overridden per test if needed
+        ROOT_URLCONF=__name__,  # will be overridden per test if needed
         INSTALLED_APPS=[
-            # Add any app that may be required (e.g., if your views use templates)
-            # but often none are needed for routing tests.
+            "django.contrib.auth",
+            "django.contrib.contenttypes",
         ],
-        # If you use the test client, you might need MIDDLEWARE (optional)
         MIDDLEWARE=[],  # empty for speed
+        TEMPLATES=[
+            {
+                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "DIRS": [],
+                "APP_DIRS": True,
+                "OPTIONS": {
+                    "context_processors": [
+                        "django.template.context_processors.request",
+                    ],
+                },
+            }
+        ],
     )
     django.setup()
