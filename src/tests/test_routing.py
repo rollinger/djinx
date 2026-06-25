@@ -70,3 +70,14 @@ def test_no_name_resolver():
     assert request_path == "/section/2/"
     match = resolve(request_path)
     assert match.func.__name__ == "section_02"
+
+@override_settings(ROOT_URLCONF=__name__)
+def test_name_override_resolver():
+    request_path = reverse("djxi:get_the_section_you_want", kwargs={"id": 3})
+    assert request_path == "/section/3"
+    match = resolve(request_path)
+    assert match.func.__name__ == "section_03"
+    request_path = reverse("djxi:get_the_section_you_want", kwargs={"id": 4})
+    assert request_path == "/section/4"
+    match = resolve(request_path)
+    assert match.func.__name__ == "section_by_id"
