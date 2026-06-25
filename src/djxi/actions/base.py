@@ -76,7 +76,7 @@ class DxActionRouter:
         for attr_name in dir(cls):
             attr = getattr(cls, attr_name)
             if hasattr(attr, "_routes"):
-                for url_path, methods in attr._routes:
+                for url_path, methods, name in attr._routes:
                     # Create a view that instantiates the class and calls the method
                     def make_view(method_name, allowed_methods, attr_func=attr):
                         @wraps(attr_func)
@@ -89,6 +89,8 @@ class DxActionRouter:
 
                         return view
 
-                    patterns.append(path(url_path, make_view(attr_name, methods)))
+                    patterns.append(
+                        path(url_path, make_view(attr_name, methods), name=name)
+                    )
 
         return patterns
