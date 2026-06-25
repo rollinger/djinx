@@ -1,15 +1,17 @@
 {% load static %}
+{% load djxi %}
 
 <!doctype html>
-<html lang="en" hx-headers:inherited='{"X-CSRFTOKEN":"{{ csrf_token }}"}'>
+<html lang="en">
   <head>
       <meta charset="UTF-8">
       <link rel="stylesheet" href="{% static "style.css" %}">
-      <script src="{% static "htmx.js" %}"></script>
+      {% htmx_script_inclusion %}
       <title>{% block title %}DjXi{% endblock %}</title>
   </head>
-  <body >
+  <body {% htmx_headers %}>
     <div id="content">
+
         {% block content %}{% endblock %}
     </div>
   </body>
