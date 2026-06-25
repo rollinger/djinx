@@ -1,4 +1,5 @@
 from django.urls import path
+from functools import wraps
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.template import Template, RequestContext
@@ -77,7 +78,8 @@ class DxActionRouter:
             if hasattr(attr, "_routes"):
                 for url_path, methods in attr._routes:
                     # Create a view that instantiates the class and calls the method
-                    def make_view(method_name, allowed_methods):
+                    def make_view(method_name, allowed_methods, attr_func=attr):
+                        @wraps(attr_func)
                         def view(request, *args, **kwargs):
                             if request.method not in allowed_methods:
                                 return HttpResponseNotAllowed(allowed_methods)
