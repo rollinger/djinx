@@ -15,3 +15,42 @@ def dx_route(path: str, methods: [] = None, **kwargs):
         return func
 
     return decorator
+
+
+#
+# Alias definitions
+#
+def dx_GET(path: str, **kwargs):
+    return dx_route(path, ["GET"], **kwargs)
+
+
+def dx_HEAD(path: str, **kwargs):
+    return dx_route(path, ["HEAD"], **kwargs)
+
+
+def dx_POST(path: str, **kwargs):
+    return dx_route(path, ["POST"], **kwargs)
+
+
+def dx_PUT(path: str, **kwargs):
+    return dx_route(path, ["PUT"], **kwargs)
+
+
+def dx_PATCH(path: str, **kwargs):
+    return dx_route(path, ["PATCH"], **kwargs)
+
+
+def dx_DELETE(path: str, **kwargs):
+    return dx_route(path, ["DELETE"], **kwargs)
+
+
+def dx_OPTIONS(path: str, **kwargs):
+    return dx_route(path, ["OPTIONS"], **kwargs)
+
+
+def dx_ANY(path: str, **kwargs):
+    return dx_route(
+        path,
+        ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+        **kwargs,
+    )
