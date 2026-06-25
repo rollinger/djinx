@@ -18,7 +18,6 @@ INLINE_TEMPLATE = """
     <p>{{ number|intword }}</p>
 </dx-section>
 """
-#
 
 
 class InlineActionRouter(DxActionRouter):
