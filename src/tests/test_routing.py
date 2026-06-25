@@ -1,3 +1,4 @@
+# fmt: off
 from django.test import override_settings, RequestFactory
 from django.urls import path, include, resolve, reverse
 
@@ -40,36 +41,11 @@ urlpatterns = [
 @override_settings(ROOT_URLCONF=__name__)
 def test_path_resolver():
     true_paths = {
-        "/section/1": {
-            "view": "section_01",
-            "args": (),
-            "kwargs": {},
-            "content": "Content 1",
-        },
-        "/section/2/": {
-            "view": "section_02",
-            "args": (),
-            "kwargs": {},
-            "content": "Content 2",
-        },
-        "/section/3": {
-            "view": "section_03",
-            "args": (),
-            "kwargs": {},
-            "content": "Content 3",
-        },
-        "/section/4": {
-            "view": "section_by_id",
-            "args": (),
-            "kwargs": {"id": 4},
-            "content": "",
-        },
-        "/section/99": {
-            "view": "section_by_id",
-            "args": (),
-            "kwargs": {"id": 99},
-            "content": "",
-        },
+        "/section/1": {"view": "section_01", "args": (), "kwargs": {}, "content": "Content 1"},
+        "/section/2/": {"view": "section_02", "args": (), "kwargs": {}, "content": "Content 2"},
+        "/section/3": {"view": "section_03", "args": (), "kwargs": {}, "content": "Content 3"},
+        "/section/4": {"view": "section_by_id", "args": (), "kwargs": {"id": 4}, "content": ""},
+        "/section/99": {"view": "section_by_id", "args": (), "kwargs": {"id": 99}, "content": ""},
     }
     rf = RequestFactory()
     for request_path, truth in true_paths.items():
@@ -78,11 +54,7 @@ def test_path_resolver():
         assert match.args == truth["args"]
         assert match.kwargs == truth["kwargs"]
         req = rf.get(request_path)
-        assert (
-            match.func(req, *match.args, **match.kwargs).content.decode()
-            == truth["content"]
-        )
-
+        assert match.func(req, *match.args, **match.kwargs).content.decode() == truth["content"]
 
 @override_settings(ROOT_URLCONF=__name__)
 def test_name_resolver():
