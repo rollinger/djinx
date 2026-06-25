@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.core.exceptions import ImproperlyConfigured
 
 
 class DjxiAppConfig(AppConfig):
@@ -16,7 +17,7 @@ class DjxiAppConfig(AppConfig):
 
         htmx_version = package_settings.DX_HTMX_VERSION
         if htmx_version not in ["2", "4"]:
-            raise ValueError("DX_HTMX_VERSION must be 2 or 4")
+            raise ImproperlyConfigured("DX_HTMX_VERSION must be 2 or 4")
 
         # Optional: Import signals if you have a signals.py file
         # import mypackage.signals
