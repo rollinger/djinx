@@ -19,5 +19,9 @@ class DjxiAppConfig(AppConfig):
         if htmx_version not in ["2", "4"]:
             raise ImproperlyConfigured("DX_HTMX_VERSION must be 2 or 4")
 
+        section_tag = package_settings.DX_SECTION_TAG
+        if section_tag in ["", None]:
+            raise ImproperlyConfigured("DX_SECTION_TAG can not be None or empty")
+
         # Optional: Import signals if you have a signals.py file
         # import mypackage.signals

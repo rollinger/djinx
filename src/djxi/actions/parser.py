@@ -1,5 +1,5 @@
 from html.parser import HTMLParser
-
+from djxi.conf import package_settings as djxi_settings
 from django.template import loader
 import os
 
@@ -7,13 +7,14 @@ import os
 class SectionParser(HTMLParser):
     def __init__(self):
         super().__init__()
+        self.section_tag = getattr(djxi_settings, "DX_SECTION_TAG", None)
         self.sections = {}  # name -> inner HTML
         self._current_name = None
         self._inside = False
         self._chunks = []
 
     def handle_starttag(self, tag, attrs):
-        if tag == "dx-section":
+        if tag == self.section_tag:
             # Extract the 'name' attribute
             attrs_dict = dict(attrs)
             name = attrs_dict.get("name")
@@ -28,7 +29,7 @@ class SectionParser(HTMLParser):
             self._chunks.append(f"<{tag}{attrs_str}>")
 
     def handle_endtag(self, tag):
-        if tag == "dx-section" and self._inside:
+        if tag == self.section_tag and self._inside:
             # End of section – store the collected inner HTML
             self.sections[self._current_name] = "".join(self._chunks)
             self._inside = False
