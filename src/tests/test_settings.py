@@ -8,7 +8,7 @@ def test_conf_DX_HTMX_VERSION():
         assert djxi_settings.DX_HTMX_VERSION == "2"
 
 
-def test_conf_DX_SECTION_NAME():
-    section_name = getattr(djxi_settings, "DX_SECTION_NAME", None)
+def test_conf_DX_SECTION_TAG():
+    section_name = getattr(djxi_settings, "DX_SECTION_TAG", None)
     assert section_name is not None
     assert section_name == "dx-section"
