@@ -1,12 +1,6 @@
-import os
-from pathlib import Path
-
 import pytest
 from django.core.exceptions import ImproperlyConfigured
 from ..djxi.actions import DxActionRouter
-
-TEST_DIR = Path(__file__).parent
-TEMPLATE_PATH = os.path.join(Path(__file__).parent, "data/template.html")
 
 INLINE_TEMPLATE = """
 <dx-section name="a-b">AB</dx-section><dx-section name="long spaced name">
@@ -28,13 +22,7 @@ class InlineActionRouter(DxActionRouter):
 
 
 class TemplateActionRouter(DxActionRouter):
-    template_name = TEMPLATE_PATH
-
-
-def test_template_exists():
-    template_path = os.path.join(TEST_DIR, TEMPLATE_PATH)
-    assert os.path.exists(template_path)
-    assert os.path.isfile(template_path)
+    template_name = "template.html"
 
 
 def test_djxi_empty_init():
