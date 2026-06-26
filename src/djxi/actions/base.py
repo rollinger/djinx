@@ -1,13 +1,12 @@
-from django.urls import path
-from functools import wraps
 from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponse
 from django.template import Template, RequestContext
 
 from .parser import SectionParser, load_django_template
+from .router import DXRouterMixin
 
 
-class DxActionRouter:
+class DxActionRouter(DXRouterMixin):
     """Unify the Main User Loop into one class with defined routed actions and a section library.
     Main User Loop = Request->Route->Logic->Render->Response ...
 
@@ -64,33 +63,3 @@ class DxActionRouter:
         If name cannot be found, returns empty string.
         """
         return self._dx_section_dict.get(name, "")
-
-    @classmethod
-    def dx_router(cls) -> list:
-        """
-        Generate a list of Django URL patterns from all methods decorated with @route.
-        Use the class method to DxActionRouter.dx_router() in the url conf to hook the routes
-        """
-        patterns = []
-
-        for attr_name in dir(cls):
-            attr = getattr(cls, attr_name)
-            if hasattr(attr, "_routes"):
-                for url_path, methods, name in attr._routes:
-                    # Create a view that instantiates the class and calls the method
-                    def make_view(method_name, allowed_methods, attr_func=attr):
-                        @wraps(attr_func)
-                        def view(request, *args, **kwargs):
-                            if request.method not in allowed_methods:
-                                return HttpResponseNotAllowed(allowed_methods)
-                            instance = cls()  # instantiate the view class
-                            handler = getattr(instance, method_name)
-                            return handler(request, *args, **kwargs)
-
-                        return view
-
-                    patterns.append(
-                        path(url_path, make_view(attr_name, methods), name=name)
-                    )
-
-        return patterns
