@@ -6,7 +6,6 @@ from django.core.exceptions import ImproperlyConfigured
 from ..djxi.actions import DxActionRouter
 
 TEST_DIR = Path(__file__).parent
-
 TEMPLATE_PATH = os.path.join(Path(__file__).parent, "data/template.html")
 
 INLINE_TEMPLATE = """

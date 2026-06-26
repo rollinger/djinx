@@ -1,4 +1,4 @@
-""" Test compatibility of inline sections with Django Templating"""
+""" Test compatibility of inline sections with Django Templating Tags and Filter"""
 from djxi.actions import DxActionRouter, dx_route
 from django.test import override_settings, RequestFactory, modify_settings
 from django.urls import path, include, resolve, reverse
@@ -17,6 +17,10 @@ INLINE_TEMPLATE = """
     {% load humanize %}
     <p>{{ number|intword }}</p>
 </dx-section>
+<dx-section name="hello-include">
+    <p>Hello {% for name in names %}{% include "partial.html" %}{% endfor %}!</p>
+</dx-section>
+
 """
 
 
@@ -41,6 +45,11 @@ class InlineActionRouter(DxActionRouter):
     @dx_route("hello-humanize/<str:number>", methods=["GET"])
     def hello_humanize(self, request, number: str):
         return self.render_section(request, "hello-humanize", {"number": number})
+
+    @dx_route("hello_include", methods=["GET"])
+    def hello_include(self, request):
+        context = {"names": ["Django", "World", "Python"]}
+        return self.render_section(request, "hello-include", context)
 
 
 # URL Patterns from .dx_router
@@ -69,6 +78,17 @@ def test_builtin_templatetags():
     assert req.method == "GET"
     assert response.status_code == 200
     assert response.content.decode().strip() == "<p>Hello Django, World, Python!</p>"
+
+
+@override_settings(ROOT_URLCONF=__name__)
+def test_template_include():
+    rf = RequestFactory()
+    resolver_match = resolve(reverse("djxi:hello_include"))
+    req = rf.get(resolver_match.url_name)
+    response = resolver_match.func(req, *resolver_match.args, **resolver_match.kwargs)
+    assert req.method == "GET"
+    assert response.status_code == 200
+    assert response.content.decode().strip() == "<p>Hello Django & World & Python!</p>"
 
 
 @override_settings(ROOT_URLCONF=__name__)

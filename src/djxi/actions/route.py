@@ -1,3 +1,11 @@
+""" Routing of class methods
+
+TODO: Potential Refactor
+- dx_route -> make_route | dx_view
+- dx_router -> dx_collect_views
+"""
+
+
 def dx_route(path: str, methods: [] = None, **kwargs):
     """
     Decorator to mark a class method as a URL endpoint.

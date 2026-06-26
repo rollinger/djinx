@@ -1,6 +1,9 @@
-# python
+from pathlib import Path
 import django
 from django.conf import settings
+
+TEST_DIR = Path(__file__).parent
+TEMPLATE_DIR = str(TEST_DIR / "data")  # absolute string path usable by Django
 
 # Configure Django only once
 if not settings.configured:
@@ -16,7 +19,7 @@ if not settings.configured:
         TEMPLATES=[
             {
                 "BACKEND": "django.template.backends.django.DjangoTemplates",
-                "DIRS": [],
+                "DIRS": [TEMPLATE_DIR],
                 "APP_DIRS": True,
                 "OPTIONS": {
                     "context_processors": [
