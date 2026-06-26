@@ -12,7 +12,7 @@ INLINE_TEMPLATE = """
 
 
 class InlineActionRouter(DxActionRouter):
-    inline_template = INLINE_TEMPLATE
+    section_inline = INLINE_TEMPLATE
 
     @dx_route("section/1", methods=["GET"], name="nifty_first_section")
     def section_01(self, request):

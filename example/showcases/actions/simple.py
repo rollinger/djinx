@@ -19,7 +19,7 @@ TEMPLATE = """
 
 
 class SimpleInlineActionRouter(DxActionRouter):
-    inline_template = TEMPLATE
+    section_inline = TEMPLATE
 
     @dx_route("agreement", methods=["GET"])
     def agreement(self, request):

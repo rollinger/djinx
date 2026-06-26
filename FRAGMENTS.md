@@ -1,3 +1,7 @@
+## Naming
+Djxi: DJango htmX Integration
+DjAct: Play with word on ReAct (jacked, jagged, shagged)
+
 ## 🚀 Installation
 
 ### 1. Install via `pip`

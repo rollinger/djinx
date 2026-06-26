@@ -18,11 +18,11 @@ class EmptyActionRouter(DxActionRouter):
 
 
 class InlineActionRouter(DxActionRouter):
-    inline_template = INLINE_TEMPLATE
+    section_inline = INLINE_TEMPLATE
 
 
 class TemplateActionRouter(DxActionRouter):
-    template_name = "template.html"
+    section_template_name = "template.html"
 
 
 def test_djxi_empty_init():
@@ -33,17 +33,17 @@ def test_djxi_empty_init():
 
 def test_djxi_inline_build_sections():
     dx_action = InlineActionRouter()
-    assert len(dx_action._dx_section_dict) == 3
-    assert dx_action.get_template_section("a-b") == "AB"
-    assert dx_action.get_template_section("long spaced name") == "\nLong spaced Name\n"
-    assert dx_action.get_template_section("b-c-d") == "\n    This should be good<br>\n"
-    assert dx_action.get_template_section("this-key-does-not_exist") == ""
+    assert len(dx_action._dx_section_cache) == 3
+    assert dx_action.get_section("a-b") == "AB"
+    assert dx_action.get_section("long spaced name") == "\nLong spaced Name\n"
+    assert dx_action.get_section("b-c-d") == "\n    This should be good<br>\n"
+    assert dx_action.get_section("this-key-does-not_exist") == ""
 
 
 def test_djxi_template_build_sections():
     dx_action = TemplateActionRouter()
-    assert len(dx_action._dx_section_dict) == 3
-    assert dx_action.get_template_section("a-b") == "AB"
-    assert dx_action.get_template_section("long spaced name") == "\nLong spaced Name\n"
-    assert dx_action.get_template_section("b-c-d") == "\n    This should be good<br>\n"
-    assert dx_action.get_template_section("this-key-does-not_exist") == ""
+    assert len(dx_action._dx_section_cache) == 3
+    assert dx_action.get_section("a-b") == "AB"
+    assert dx_action.get_section("long spaced name") == "\nLong spaced Name\n"
+    assert dx_action.get_section("b-c-d") == "\n    This should be good<br>\n"
+    assert dx_action.get_section("this-key-does-not_exist") == ""

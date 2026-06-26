@@ -25,7 +25,7 @@ INLINE_TEMPLATE = """
 
 
 class InlineActionRouter(DxActionRouter):
-    inline_template = INLINE_TEMPLATE
+    section_inline = INLINE_TEMPLATE
 
     @dx_route("hello/<str:name>", methods=["GET"], name="hello_world")
     def hallo_du(self, request, name: str):

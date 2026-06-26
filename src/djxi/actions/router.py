@@ -1,8 +1,8 @@
 """ Djxi Routing
 
 TODO: Potential Refactor
-- dx_route -> make_route | dx_view
-- dx_router -> dx_collect_views
+- dx_route -> make_route | dx_mark_view
+- dx_router -> dx_collect_paths
 """
 from functools import wraps
 from django.http import HttpResponseNotAllowed
@@ -49,7 +49,7 @@ def dx_route(path: str, methods: [] = None, **kwargs):
     - path: URL path (can include Django path converters, e.g. '/items/<int:id>/')
     - methods: list of allowed HTTP methods (defaults to ["GET"])
     - kwargs:
-        - name: qualify the route with a name
+        - name: qualify the route with a name, default to func.__name__
     """
     if methods is None:
         methods = ["GET"]

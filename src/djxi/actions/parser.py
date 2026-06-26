@@ -50,9 +50,7 @@ class SectionParser(HTMLParser):
 
 
 def load_django_template(template_name: str) -> str:
-    """Concatenates the specified templates and returns the unmodified string.
-    In most cases you want to set eighter or, yet both is allowed.
-    """
+    """Loads a Django template from the given name."""
     template_string = ""
     # If template_name references a filesystem path, read it directly.
     # In that case template name has to be an absolute path (this is mainly for the test suite)
