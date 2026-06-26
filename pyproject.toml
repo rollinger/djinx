@@ -3,7 +3,7 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "djxi"
+name = "DjAct"
 version = "0.1.1"
 description = "Django HTMX Integration"
 readme = "README.md"
@@ -23,5 +23,5 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/rollinger/djxi"
-Repository = "https://github.com/rollinger/djxi"
+Homepage = "https://github.com/rollinger/djact"
+Repository = "https://github.com/rollinger/djact"

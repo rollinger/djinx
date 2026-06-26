@@ -1,5 +1,5 @@
 from html.parser import HTMLParser
-from djxi.conf import package_settings as djxi_settings
+from djact.conf import package_settings as djact_settings
 from django.template import loader
 import os
 
@@ -7,7 +7,7 @@ import os
 class SectionParser(HTMLParser):
     def __init__(self):
         super().__init__()
-        self.section_tag = getattr(djxi_settings, "DX_SECTION_TAG", None)
+        self.section_tag = getattr(djact_settings, "DX_SECTION_TAG", None)
         self.sections = {}  # name -> inner HTML
         self._current_name = None
         self._inside = False

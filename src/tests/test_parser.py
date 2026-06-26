@@ -1,4 +1,4 @@
-from djxi.actions import DxActionRouter
+from djact.actions import DxActionRouter
 from django.test import override_settings
 
 DEFAULT = "dx-section"

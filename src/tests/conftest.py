@@ -13,7 +13,7 @@ if not settings.configured:
         INSTALLED_APPS=[
             "django.contrib.auth",
             "django.contrib.contenttypes",
-            "djxi",
+            "djact",
         ],
         MIDDLEWARE=[],  # empty for speed
         TEMPLATES=[
