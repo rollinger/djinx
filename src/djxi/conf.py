@@ -6,9 +6,10 @@ DEFAULTS = {
     "DX_HTMX_VERSION": "4",
     "DX_HTMX_MINIFIED": False,
     "DX_SECTION_TAG": "dx-section",
+    # Messaging integration
     "DX_MESSAGE_CONTAINER_ID": "message-container",
     "DX_MESSAGE_SWAP_METHOD": "beforeend",
-    "DX_MESSAGE_TEMPLATE": "messages/message.html",
+    "DX_MESSAGE_TEMPLATE": "djxi/messages/message_item.html",
 }
 
 

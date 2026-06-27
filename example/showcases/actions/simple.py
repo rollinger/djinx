@@ -1,3 +1,4 @@
+from django.contrib import messages
 from djxi.actions import DxActionRouter, dx_route
 
 TEMPLATE = """
@@ -30,11 +31,12 @@ class SimpleInlineActionRouter(DxActionRouter):
     def get_check_button(self, request):
         # name parameter of dx_route is defined
         context = {"name": "Phil"}
+        messages.info(request, "Ready for confirmation!")
         return self.render_section(
             request, section_name="check-button", context=context
         )
 
     @dx_route("confirm", methods=["PUT", "POST"])
     def confirm(self, request):
-        context = {}
-        return self.render_section(request, "check-confirmed", context)
+        messages.success(request, "Thanks for confirming!")
+        return self.render_section(request, "check-confirmed")
