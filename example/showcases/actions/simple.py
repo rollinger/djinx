@@ -1,5 +1,5 @@
 from django.contrib import messages
-from djxi.actions import DxActionRouter, dx_route
+from djxi.actions import DXEndpointBattery, dx_route
 
 TEMPLATE = """
 <dx-section name="agreement">
@@ -19,7 +19,7 @@ TEMPLATE = """
 """
 
 
-class SimpleInlineActionRouter(DxActionRouter):
+class SimpleInlineActionRouter(DXEndpointBattery):
     section_inline = TEMPLATE
 
     @dx_route("agreement", methods=["GET"])

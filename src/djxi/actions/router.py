@@ -10,13 +10,15 @@ from django.urls import path
 
 
 class DXRouterMixin:
-    """Use as a Mixin to call CLS.dx_router() to get a list of djxi routes"""
+    """Provides a interface for extracting urls from dx_route'd methods.
+    Use as a Mixin to call CLS.dx_router() to get a list of djxi routes
+    """
 
     @classmethod
     def dx_router(cls) -> list:
         """
         Generate a list of Django URL patterns from all methods decorated with @route.
-        Use the class method to DxActionRouter.dx_router() in the url conf to hook the routes
+        Use the class method to DXEndpointBattery.dx_router() in the url conf to hook the routes
         """
         patterns = []
 

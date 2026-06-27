@@ -7,7 +7,7 @@ from .router import DXRouterMixin
 from .section import DXSectionTemplateMixin
 
 
-class DxActionRouter(DXSectionTemplateMixin, DXRouterMixin):
+class DXEndpointBattery(DXSectionTemplateMixin, DXRouterMixin):
     """Unify the Main User Loop into one class with defined routed actions and a section library.
     Main User Loop = Request->Route->Logic->Render->Response ...
 
@@ -17,6 +17,9 @@ class DxActionRouter(DXSectionTemplateMixin, DXRouterMixin):
     2) set up actions as class methods with the route decorator
     3) hook the router into a url conf
     """
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     def render_section(self, request, section_name, context=None):
         """Render a dx-section as a full HTTP response."""

@@ -1,8 +1,8 @@
 from django.contrib import messages
-from djxi.actions import DxActionRouter, dx_route
+from djxi.actions import DXEndpointBattery, dx_route
 
 
-class ParameterInlineActionRouter(DxActionRouter):
+class ParameterInlineActionRouter(DXEndpointBattery):
     # Using a template instead of an inline string
     section_template_name = "showcases/sections/counter.html"
 

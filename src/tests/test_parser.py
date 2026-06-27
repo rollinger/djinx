@@ -1,6 +1,6 @@
 from django.test import override_settings
 
-from djxi.actions import DxActionRouter
+from djxi.actions import DXEndpointBattery
 
 DEFAULT = "dx-section"
 CUSTOM = "my-section-tag"
@@ -17,7 +17,7 @@ INLINE_TEMPLATE = f"""
 """
 
 
-class InlineActionRouter(DxActionRouter):
+class InlineActionRouter(DXEndpointBattery):
     section_inline = INLINE_TEMPLATE
 
 

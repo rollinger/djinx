@@ -4,7 +4,7 @@ from .parser import SectionParser, load_django_template
 
 
 class DXSectionTemplateMixin:
-    """"""
+    """Mixin of functionality to extract sections from templates and inline strings."""
 
     section_inline = None
     section_template_name = None
@@ -13,7 +13,7 @@ class DXSectionTemplateMixin:
         """Constructor builds the dx section cache."""
         if self.section_inline is None and self.section_template_name is None:
             raise ImproperlyConfigured(
-                "DxActionRouter requires a definition of sections via "
+                "DXEndpointBattery requires a definition of sections via "
                 "'section_inline' or a path to a 'section_template_name'"
             )
         self.build_section_cache()

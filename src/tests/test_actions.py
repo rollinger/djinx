@@ -1,7 +1,7 @@
 import pytest
 from django.core.exceptions import ImproperlyConfigured
 
-from djxi.actions import DxActionRouter
+from djxi.actions import DXEndpointBattery
 
 INLINE_TEMPLATE = """
 <dx-section name="a-b">AB</dx-section><dx-section name="long spaced name">
@@ -14,15 +14,15 @@ Long spaced Name
 """
 
 
-class EmptyActionRouter(DxActionRouter):
+class EmptyActionRouter(DXEndpointBattery):
     pass
 
 
-class InlineActionRouter(DxActionRouter):
+class InlineActionRouter(DXEndpointBattery):
     section_inline = INLINE_TEMPLATE
 
 
-class TemplateActionRouter(DxActionRouter):
+class TemplateActionRouter(DXEndpointBattery):
     section_template_name = "template.html"
 
 

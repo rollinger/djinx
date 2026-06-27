@@ -3,6 +3,7 @@ from django.conf import settings
 # Define your package's default settings here.
 # Use ALL CAPS names, just like Django's own settings.
 DEFAULTS = {
+    # Base Settings
     "DX_HTMX_VERSION": "4",
     "DX_HTMX_MINIFIED": False,
     "DX_SECTION_TAG": "dx-section",

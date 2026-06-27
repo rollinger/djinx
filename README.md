@@ -15,7 +15,7 @@
 
 **Stop hunting for HTMX endpoints.**  
 Djxi bundles the route, the view logic, and the HTML partial into a single **Endpoint Battery**. 
-Drop the `DxActionRouter` into your existing Django views or use it standalone. Keep every tiny `hx-*` swap exactly where it lives—without scattering your code across `urls.py`, `views/`, and `templates/`.
+Drop the `DXEndpointBattery` into your existing Django views or use it standalone. Keep every tiny `hx-*` swap exactly where it lives—without scattering your code across `urls.py`, `views/`, and `templates/`.
 
 - **No more archaeology.** No more digging through three files just to tweak a button label.  
 - **LoB, restored.** Request → Logic → Render stays in one atomic, inline hub.  
@@ -75,7 +75,7 @@ In your settings file you can overide the following default values for Djxi:
 Create and manage your HTMX Endpoint in a convenient Battery:
 
 ```python
-from djxi.actions import DxActionRouter, dx_route
+from djxi.actions import DXEndpointBattery, dx_route
 
 INLINE_TEMPLATE = """
 <dx-section name="confirm-button">
@@ -89,9 +89,10 @@ INLINE_TEMPLATE = """
 </dx-section>
 """
 
-class SimpleInlineActionRouter(DxActionRouter):
+
+class SimpleInlineActionRouter(DXEndpointBattery):
     inline_template = INLINE_TEMPLATE
-    
+
     @dx_route("get-confirm-button", methods=["GET"])
     def get_confirm_button(self, request):
         context = {"name": "Phil"}

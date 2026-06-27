@@ -2,7 +2,7 @@
 from django.test import override_settings, RequestFactory, modify_settings
 from django.urls import path, include, resolve, reverse
 
-from djxi.actions import DxActionRouter, dx_route
+from djxi.actions import DXEndpointBattery, dx_route
 
 INLINE_TEMPLATE = """
 <dx-section name="hello-world">
@@ -25,7 +25,7 @@ INLINE_TEMPLATE = """
 """
 
 
-class InlineActionRouter(DxActionRouter):
+class InlineActionRouter(DXEndpointBattery):
     section_inline = INLINE_TEMPLATE
 
     @dx_route("hello/<str:name>", methods=["GET"], name="hello_world")
