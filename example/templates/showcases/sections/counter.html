@@ -1,0 +1,13 @@
+<dx-section name="counter">
+    <button hx-put='{% url "showcase:count_up" value %}' hx-swap="outerHTML">
+        Count up {{ value }}
+    </button>
+</dx-section>
+
+<dx-section name="counter-exceeded">
+    <button disabled>Counter {{ value }}</button>
+
+    <hx-partial hx-target="#message-container" hx-swap="beforeend">
+        <div class="message" style="border: 2px; color: red;">The counter exceeded the limit of 100</div>
+    </hx-partial>
+</dx-section>

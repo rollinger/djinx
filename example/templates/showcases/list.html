@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h3>SimpleInlineActionRouter</h3>
-    <div hx-get="/showcase/simple/agreement" hx-trigger="load"></div>
+    <div>
+        <h3>SimpleInlineActionRouter</h3>
+        <div hx-get='{% url "showcase:get_agreement" %}' hx-trigger="load"></div>
+    </div>
+    <div>
+        <h3>ParameterInlineActionRouter<span id="message-container"></span></h3>
+        <div hx-get='{% url "showcase:counter" %}' hx-trigger="load"></div>
+    </div>
 {% endblock content %}

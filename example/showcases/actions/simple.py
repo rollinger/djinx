@@ -3,7 +3,7 @@ from djxi.actions import DxActionRouter, dx_route
 TEMPLATE = """
 <dx-section name="agreement">
     <div>Read this before confirm</div>
-    <div hx-get="/showcase/simple/get-check-button" hx-trigger="revealed delay:1s" hx-swap="outerHTML">Loading...</div>
+    <div hx-get='{% url "showcase:load-check-button" %}' hx-trigger="revealed delay:1s" hx-swap="outerHTML">Loading...</div>
 </dx-section>
 
 <dx-section name="check-button">
@@ -22,11 +22,13 @@ class SimpleInlineActionRouter(DxActionRouter):
     section_inline = TEMPLATE
 
     @dx_route("agreement", methods=["GET"])
-    def agreement(self, request):
+    def get_agreement(self, request):
+        # name parameter is not defined in dx_route; defaults to func.__name__
         return self.render_section(request, "agreement")
 
-    @dx_route("get-check-button", methods=["GET"])
+    @dx_route("get-check-button", methods=["GET"], name="load-check-button")
     def get_check_button(self, request):
+        # name parameter of dx_route is defined
         context = {"name": "Phil"}
         return self.render_section(
             request, section_name="check-button", context=context
