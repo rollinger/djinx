@@ -1,5 +1,5 @@
 # MANIFEST.in
 include pyproject.toml
 include README.md
-recursive-include src/djact/templates *
-recursive-include src/djact/static *
+recursive-include src/djxi/templates *
+recursive-include src/djxi/static *

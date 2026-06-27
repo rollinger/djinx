@@ -1,6 +1,6 @@
 ## Naming
-djact: DJango htmX Integration
-DjAct: Play with word on ReAct (jacked, jagged, shagged) djact
+Djxi: DJango htmX Integration
+DjAct: Play with word on ReAct (jacked, jagged, shagged)
 
 ## 🚀 Installation
 
@@ -68,11 +68,11 @@ Imagine:
 #### Make it easier for Django (web 1.0) to integrate with HTMX (web 2.5)
 Django is the great, reliable grandpa. Does its thing very well and slow and unsexy.
 HTMX is the new sexy, agile but fragmented Post-Grad who likes to hookup with Grandpa.
-djact is the memorandum of understanding between grandpa and his new crush.
+Djxi is the memorandum of understanding between grandpa and his new crush.
 #### Reduce/manage the drag to dispersed partials.
 Django 1.0 Templating system alone tends to become unwieldy due to dispersed partials for DRY reasons.
 That is made worse by HTMX, since it adds the need to further fragment the html into smaller response snippets.
-djact introduces inline section templates which bundle a render domain in a single unified document.
+Djxi introduces inline section templates which bundle a render domain in a single unified document.
 #### Unify the Main User Loop in one location (LoB-atomize)
 Main User Loop = Request->Route->Logic->Render->Response
 Lobatomize: Unify all aspects of the main sequence into ONE atomic hub/file maximizing LoB

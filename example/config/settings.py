@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
     # Showcase Django HTMX Integration
-    "djact",
+    "djxi",
     "showcases",
 ]
 
@@ -130,6 +130,6 @@ STATICFILES_DIRS = ["static"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 #
-# djact Settings overrides
+# Djxi Settings overrides
 #
 DX_HTMX_MINIFIED = False

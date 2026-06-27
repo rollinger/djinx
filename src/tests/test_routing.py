@@ -2,7 +2,7 @@
 from django.test import override_settings, RequestFactory
 from django.urls import path, include, resolve, reverse
 
-from djact.actions import DxActionRouter, dx_route
+from djxi.actions import DxActionRouter, dx_route
 
 INLINE_TEMPLATE = """
 <dx-section name="section_01">Content 1</dx-section>
@@ -34,7 +34,7 @@ class InlineActionRouter(DxActionRouter):
 
 # URL Patterns from .dx_router
 urlpatterns = [
-    path("", include((InlineActionRouter.dx_router(), "djact"), namespace="djact"))
+    path("", include((InlineActionRouter.dx_router(), "djxi"), namespace="djxi"))
 ]
 
 
@@ -58,7 +58,7 @@ def test_path_resolver():
 
 @override_settings(ROOT_URLCONF=__name__)
 def test_name_resolver():
-    request_path = reverse("djact:nifty_first_section")
+    request_path = reverse("djxi:nifty_first_section")
     assert request_path == "/section/1"
     match = resolve(request_path)
     assert match.func.__name__ == "section_01"
@@ -66,18 +66,18 @@ def test_name_resolver():
 
 @override_settings(ROOT_URLCONF=__name__)
 def test_no_name_resolver():
-    request_path = reverse("djact:section_02")
+    request_path = reverse("djxi:section_02")
     assert request_path == "/section/2/"
     match = resolve(request_path)
     assert match.func.__name__ == "section_02"
 
 @override_settings(ROOT_URLCONF=__name__)
 def test_name_override_resolver():
-    request_path = reverse("djact:get_the_section_you_want", kwargs={"id": 3})
+    request_path = reverse("djxi:get_the_section_you_want", kwargs={"id": 3})
     assert request_path == "/section/3"
     match = resolve(request_path)
     assert match.func.__name__ == "section_03"
-    request_path = reverse("djact:get_the_section_you_want", kwargs={"id": 4})
+    request_path = reverse("djxi:get_the_section_you_want", kwargs={"id": 4})
     assert request_path == "/section/4"
     match = resolve(request_path)
     assert match.func.__name__ == "section_by_id"

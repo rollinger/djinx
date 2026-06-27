@@ -3,8 +3,8 @@ from django.core.exceptions import ImproperlyConfigured
 
 
 class DjxiAppConfig(AppConfig):
-    name = "djact"
-    verbose_name = "Djact"
+    name = "djxi"
+    verbose_name = "Djxi"
 
     def ready(self):
         """

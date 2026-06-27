@@ -1,5 +1,5 @@
 """ Test compatibility of inline sections with Django Templating Tags and Filter"""
-from djact.actions import DxActionRouter, dx_route
+from djxi.actions import DxActionRouter, dx_route
 from django.test import override_settings, RequestFactory, modify_settings
 from django.urls import path, include, resolve, reverse
 
@@ -54,14 +54,14 @@ class InlineActionRouter(DxActionRouter):
 
 # URL Patterns from .dx_router
 urlpatterns = [
-    path("", include((InlineActionRouter.dx_router(), "djact"), namespace="djact"))
+    path("", include((InlineActionRouter.dx_router(), "djxi"), namespace="djxi"))
 ]
 
 
 @override_settings(ROOT_URLCONF=__name__)
 def test_value_interpolation():
     rf = RequestFactory()
-    resolver_match = resolve(reverse("djact:hello_world", kwargs={"name": "Django"}))
+    resolver_match = resolve(reverse("djxi:hello_world", kwargs={"name": "Django"}))
     req = rf.get(resolver_match.url_name)
     response = resolver_match.func(req, *resolver_match.args, **resolver_match.kwargs)
     assert req.method == "GET"
@@ -72,7 +72,7 @@ def test_value_interpolation():
 @override_settings(ROOT_URLCONF=__name__)
 def test_builtin_templatetags():
     rf = RequestFactory()
-    resolver_match = resolve(reverse("djact:hello_many"))
+    resolver_match = resolve(reverse("djxi:hello_many"))
     req = rf.get(resolver_match.url_name)
     response = resolver_match.func(req, *resolver_match.args, **resolver_match.kwargs)
     assert req.method == "GET"
@@ -83,7 +83,7 @@ def test_builtin_templatetags():
 @override_settings(ROOT_URLCONF=__name__)
 def test_template_include():
     rf = RequestFactory()
-    resolver_match = resolve(reverse("djact:hello_include"))
+    resolver_match = resolve(reverse("djxi:hello_include"))
     req = rf.get(resolver_match.url_name)
     response = resolver_match.func(req, *resolver_match.args, **resolver_match.kwargs)
     assert req.method == "GET"
@@ -95,7 +95,7 @@ def test_template_include():
 def test_buildin_filter():
     rf = RequestFactory()
     resolver_match = resolve(
-        reverse("djact:hello_filter", kwargs={"number": "108.999212"})
+        reverse("djxi:hello_filter", kwargs={"number": "108.999212"})
     )
     req = rf.get(resolver_match.url_name)
     response = resolver_match.func(req, *resolver_match.args, **resolver_match.kwargs)
@@ -109,7 +109,7 @@ def test_buildin_filter():
 def test_opt_in_tags():
     rf = RequestFactory()
     resolver_match = resolve(
-        reverse("djact:hello_humanize", kwargs={"number": "1000000"})
+        reverse("djxi:hello_humanize", kwargs={"number": "1000000"})
     )
     req = rf.get(resolver_match.url_name)
     response = resolver_match.func(req, *resolver_match.args, **resolver_match.kwargs)

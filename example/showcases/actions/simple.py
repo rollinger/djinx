@@ -1,4 +1,4 @@
-from djact.actions import DxActionRouter, dx_route
+from djxi.actions import DxActionRouter, dx_route
 
 TEMPLATE = """
 <dx-section name="agreement">
