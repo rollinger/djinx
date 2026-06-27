@@ -1,7 +1,7 @@
 import pytest
 from django.core.exceptions import ImproperlyConfigured
 
-from djxi.actions import DXEndpointBattery
+from djxi.endpoint import DXEndpointBattery
 
 INLINE_TEMPLATE = """
 <dx-section name="a-b">AB</dx-section><dx-section name="long spaced name">

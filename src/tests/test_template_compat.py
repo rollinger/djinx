@@ -2,7 +2,8 @@
 from django.test import override_settings, RequestFactory, modify_settings
 from django.urls import path, include, resolve, reverse
 
-from djxi.actions import DXEndpointBattery, dx_route
+from djxi.endpoint import DXEndpointBattery
+from djxi.router import dx_route
 
 INLINE_TEMPLATE = """
 <dx-section name="hello-world">

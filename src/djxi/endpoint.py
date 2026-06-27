@@ -2,9 +2,9 @@ from django.http import HttpResponse
 
 from django.template import Template, RequestContext
 
-from .messages import fetch_messages_template
-from .router import DXRouterMixin
-from .section import DXSectionMixin
+from djxi.messages import fetch_messages_template
+from djxi.router import DXRouterMixin
+from djxi.section import DXSectionMixin
 
 
 class DXEndpointBattery(DXSectionMixin, DXRouterMixin):

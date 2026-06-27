@@ -1,6 +1,6 @@
 from django.core.exceptions import ImproperlyConfigured
 
-from .parser import SectionParser, load_django_template
+from djxi.parser import SectionParser, load_django_template
 
 
 class DXSectionMixin:

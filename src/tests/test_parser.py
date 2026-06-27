@@ -1,6 +1,5 @@
 from django.test import override_settings
-
-from djxi.actions import DXEndpointBattery
+from djxi.endpoint import DXEndpointBattery
 
 DEFAULT = "dx-section"
 CUSTOM = "my-section-tag"
