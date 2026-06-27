@@ -5,7 +5,6 @@ from django.conf import settings
 DEFAULTS = {
     "DX_HTMX_VERSION": "4",
     "DX_HTMX_MINIFIED": True,
-    "DX_CSRF_TOKEN_INHERITED": True,
     "DX_SECTION_TAG": "dx-section",
 }
 
