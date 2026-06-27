@@ -38,6 +38,12 @@ jobs:
         run: |
           pre-commit run --all-files --show-diff-on-failure
 
+      - name: Debug installed package
+        run: |
+          python -c "import djxi; print(djxi.__file__)"
+          python -c "import djxi.conf; print(djxi.conf.__file__)" || echo "djxi.conf not found"
+          pip show -f djxi | grep conf   # list files in the package
+
       - name: Run pytest
         run: |
           pytest -v --cov=./ --cov-report=xml
