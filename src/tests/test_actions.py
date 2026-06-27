@@ -1,7 +1,7 @@
 import pytest
 from django.core.exceptions import ImproperlyConfigured
 
-from ..djxi.actions import DxActionRouter
+from djxi.actions import DxActionRouter
 
 INLINE_TEMPLATE = """
 <dx-section name="a-b">AB</dx-section><dx-section name="long spaced name">
