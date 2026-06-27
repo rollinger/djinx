@@ -40,9 +40,8 @@ jobs:
 
       - name: Debug installed package
         run: |
-          python -c "import djxi; print(djxi.__file__)"
-          python -c "import djxi.conf; print(djxi.conf.__file__)" || echo "djxi.conf not found"
-          pip show -f djxi | grep conf   # list files in the package
+          pip show -f djxi | grep conf
+          python -c "import djxi, os; print(os.listdir(os.path.dirname(djxi.__file__)))"
 
       - name: Run pytest
         run: |
