@@ -32,3 +32,7 @@ dev = [
 [project.urls]
 Homepage = "https://github.com/rollinger/djxi"
 Repository = "https://github.com/rollinger/djxi"
+
+[tool.pytest.ini_options]
+testpaths = ["src/tests"]
+pythonpath = ["src"]
