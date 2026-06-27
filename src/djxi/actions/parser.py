@@ -1,7 +1,8 @@
-from html.parser import HTMLParser
-from djxi.conf import package_settings as djxi_settings
-from django.template import loader
 import os
+from html.parser import HTMLParser
+from django.template import loader
+
+from djxi.conf import package_settings as djxi_settings
 
 
 class SectionParser(HTMLParser):
