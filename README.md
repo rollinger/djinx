@@ -1,4 +1,4 @@
-# Djxi | **HTMX Integration for Django** 
+# Djxi | **HTMX Integration for modern Django Frontends** 
 
 [![CI](https://github.com/rollinger/djxi/actions/workflows/main.yml/badge.svg)](https://github.com/rollinger/djxi/actions/workflows/main.yml)
 ![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)
