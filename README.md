@@ -38,7 +38,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-3) Optional: Adjust your base template or setup HTMX manually
+3) Optional: Adjust your base template to get you up and running instantly
 ```html
  {% load djxi %}
  <!doctype html>
@@ -52,7 +52,11 @@ INSTALLED_APPS = [
    </body>
  </html>
 ```
-You can choose to include the htmx script yourself and set the hx-headers to your liking.
+The htmx_script_inclusion tag will pull the unminified v4 from CDN. Set DX_HTMX_VERSION="2" to pull in v2.
+For prodution you likely want to serve your own minified htmx.js.
+
+As there are significant syntax changes between v4 and v2 of htmx, keep DX_HTMX_VERSION in sync with 
+what htmx version you are serving.
 
 ### Configuration
 In your settings file you can overide the following default values for Djxi:
