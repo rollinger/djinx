@@ -34,7 +34,7 @@ def test_djxi_empty_init():
 
 def test_djxi_inline_build_sections():
     dx_action = InlineActionRouter()
-    assert len(dx_action._dx_section_cache) == 3
+    assert len(dx_action._dx_section_cache) == 4
     assert dx_action.get_section("a-b") == "AB"
     assert dx_action.get_section("long spaced name") == "\nLong spaced Name\n"
     assert dx_action.get_section("b-c-d") == "\n    This should be good<br>\n"
@@ -43,7 +43,7 @@ def test_djxi_inline_build_sections():
 
 def test_djxi_template_build_sections():
     dx_action = TemplateActionRouter()
-    assert len(dx_action._dx_section_cache) == 3
+    assert len(dx_action._dx_section_cache) == 4
     assert dx_action.get_section("a-b") == "AB"
     assert dx_action.get_section("long spaced name") == "\nLong spaced Name\n"
     assert dx_action.get_section("b-c-d") == "\n    This should be good<br>\n"
