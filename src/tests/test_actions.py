@@ -1,5 +1,6 @@
 import pytest
 from django.core.exceptions import ImproperlyConfigured
+
 from ..djxi.actions import DxActionRouter
 
 INLINE_TEMPLATE = """

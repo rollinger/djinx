@@ -2,7 +2,7 @@
 from django.test import override_settings, RequestFactory
 from django.urls import path, include, resolve, reverse
 
-from djxi.actions import DxActionRouter, dx_route
+from ..djxi.actions import DxActionRouter, dx_route
 
 INLINE_TEMPLATE = """
 <dx-section name="section_01">Content 1</dx-section>

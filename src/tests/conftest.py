@@ -1,5 +1,5 @@
-from pathlib import Path
 import django
+from pathlib import Path
 from django.conf import settings
 
 TEST_DIR = Path(__file__).parent

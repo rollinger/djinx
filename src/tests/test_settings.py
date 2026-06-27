@@ -1,5 +1,6 @@
 from django.test import override_settings
-from djxi.conf import package_settings as djxi_settings
+
+from ..djxi.conf import package_settings as djxi_settings
 
 
 def test_conf_DX_HTMX_VERSION():

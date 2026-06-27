@@ -1,5 +1,6 @@
-from djxi.actions import DxActionRouter
 from django.test import override_settings
+
+from ..djxi.actions import DxActionRouter
 
 DEFAULT = "dx-section"
 CUSTOM = "my-section-tag"
