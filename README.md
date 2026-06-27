@@ -8,6 +8,7 @@
 [![PyPI](https://img.shields.io/pypi/v/Djxi)](https://pypi.org/project/djxi)
 [![PyPI - Wheel](https://img.shields.io/pypi/wheel/Djxi)](https://pypi.org/project/djxi)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/Djxi)](https://pypi.org/project/djxi)
+[![PyPI - Django Version](https://img.shields.io/pypi/djversions/Djxi)](https://pypi.org/project/djxi)
 
 ---
 
