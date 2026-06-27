@@ -4,7 +4,7 @@ from django.conf import settings
 # Use ALL CAPS names, just like Django's own settings.
 DEFAULTS = {
     "DX_HTMX_VERSION": "4",
-    "DX_HTMX_MINIFIED": True,
+    "DX_HTMX_MINIFIED": False,
     "DX_SECTION_TAG": "dx-section",
 }
 
