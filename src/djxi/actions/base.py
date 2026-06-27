@@ -1,6 +1,8 @@
 from django.http import HttpResponse
+
 from django.template import Template, RequestContext
 
+from .messages import fetch_messages_template
 from .router import DXRouterMixin
 from .section import DXSectionTemplateMixin
 
@@ -21,5 +23,6 @@ class DxActionRouter(DXSectionTemplateMixin, DXRouterMixin):
         if context is None:
             context = {}
         raw_html = self.get_section(section_name)
-        template = Template(raw_html)
+        msg_html = fetch_messages_template(request)
+        template = Template(raw_html + msg_html)
         return HttpResponse(template.render(RequestContext(request, context)))

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from djxi.actions import DxActionRouter, dx_route
 
 
@@ -14,7 +15,10 @@ class ParameterInlineActionRouter(DxActionRouter):
     def count_up(self, request, value):
         value += value
         context = {"value": value}
-        if value < 100:
-            return self.render_section(request, "counter", context)
-        else:
+        if value > 100:
+            messages.add_message(
+                request, messages.WARNING, "The counter exceeded the limit of 100"
+            )
             return self.render_section(request, "counter-exceeded", context)
+        else:
+            return self.render_section(request, "counter", context)

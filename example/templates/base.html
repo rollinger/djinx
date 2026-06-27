@@ -10,6 +10,13 @@
       <title>{% block title %}Djxi{% endblock %}</title>
   </head>
   <body {% htmx_headers %}>
+    {% if messages %}
+    <ul id="message-container" class="messages" style="list-style: none; float: right;">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <div id="content">
         {% block content %}{% endblock %}
     </div>
