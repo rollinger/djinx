@@ -40,7 +40,7 @@ jobs:
 
       - name: Run pytest
         run: |
-          pytest -v --cov=djxi --cov-report=xml
+          pytest -v --cov=djxi --cov-branch --cov-report=xml
 
       - name: Upload coverage to Codecov (optional)
         uses: codecov/codecov-action@v4
