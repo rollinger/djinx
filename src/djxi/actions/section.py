@@ -3,7 +3,7 @@ from django.core.exceptions import ImproperlyConfigured
 from .parser import SectionParser, load_django_template
 
 
-class DXSectionTemplateMixin:
+class DXSectionMixin:
     """Mixin of functionality to extract sections from templates and inline strings."""
 
     section_inline = None

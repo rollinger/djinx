@@ -4,10 +4,10 @@ from django.template import Template, RequestContext
 
 from .messages import fetch_messages_template
 from .router import DXRouterMixin
-from .section import DXSectionTemplateMixin
+from .section import DXSectionMixin
 
 
-class DXEndpointBattery(DXSectionTemplateMixin, DXRouterMixin):
+class DXEndpointBattery(DXSectionMixin, DXRouterMixin):
     """Unify the Main User Loop into one class with defined routed actions and a section library.
     Main User Loop = Request->Route->Logic->Render->Response ...
 
