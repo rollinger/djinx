@@ -24,7 +24,7 @@ Drop the `DxActionRouter` into your existing Django views or use it standalone. 
 Just a prenup between Grandpa Django and his sexy new HTMX fling—keeping your repo clean, one battery at a time.
 
 ## Pre-Alpha Note
-The package is not yet published and considered in experimental pre-alpha state.
+The package is considered in experimental pre-alpha state, use with caution.
 - Watch out for updates and consider giving it a star.
 - Checkout the djxi showcases in the example django app.
 
