@@ -57,3 +57,6 @@ requirements.txt
 # Example project DB and media
 example/db.sqlite3
 example/media/
+
+# Custom ignores
+FRAGMENTS.md
