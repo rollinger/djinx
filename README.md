@@ -4,12 +4,11 @@
 ![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)
 ![Lint](https://img.shields.io/badge/linting-black%2Fruff-blue)
 [![codecov](https://codecov.io/gh/rollinger/djxi/branch/master/graph/badge.svg)](https://codecov.io/gh/rollinger/djxi)
-
 ---
+[![PyPI](https://img.shields.io/pypi/v/Djxi)](https://pypi.org/project/djxi)
+[![PyPI - Wheel](https://img.shields.io/pypi/wheel/Djxi)](https://pypi.org/project/djxi)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/Djxi)](https://pypi.org/project/djxi)
 
-[![PyPI](https://img.shields.io/pypi/v/djxi)](https://pypi.org/project/djxi)
-[![PyPI - Wheel](https://img.shields.io/pypi/wheel/djxi)](https://pypi.org/project/djxi)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/djxi)](https://pypi.org/project/djxi)
 ---
 
 ## 📦 What is this?
