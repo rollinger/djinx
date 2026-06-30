@@ -76,7 +76,7 @@ In your settings file you can overide the following default values for Djxi:
 Create and manage your HTMX Endpoint in a convenient Battery:
 
 ```python
-from djxi.actions import DXEndpointBattery, dx_route
+from djxi.actions import DXEndpointBattery, dx_action 
 
 INLINE_TEMPLATE = """
 <dx-section name="confirm-button">
@@ -94,7 +94,7 @@ INLINE_TEMPLATE = """
 class SimpleInlineActionRouter(DXEndpointBattery):
     inline_template = INLINE_TEMPLATE
 
-    @dx_route("get-confirm-button", methods=["GET"])
+    @dx_action("get-confirm-button", methods=["GET"])
     def get_confirm_button(self, request):
         context = {"name": "Phil"}
         return self.render_section(

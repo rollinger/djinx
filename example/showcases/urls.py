@@ -8,6 +8,6 @@ app_name = "showcases"
 
 urlpatterns = [
     path("", ShowcasesIndexView.as_view(), name="list"),
-    path("simple/", include(SimpleInlineActionRouter.dx_router())),
-    path("counter/", include(ParameterInlineActionRouter.dx_router())),
+    path("simple/", include(SimpleInlineActionRouter.url_patterns())),
+    path("counter/", include(ParameterInlineActionRouter.url_patterns())),
 ]

@@ -1,24 +1,19 @@
-""" Djxi Routing
-
-TODO: Potential Refactor
-- dx_route -> make_route | dx_mark_view
-- dx_router -> dx_collect_paths
-"""
+""" Djxi Routing """
 from functools import wraps
 from django.http import HttpResponseNotAllowed
 from django.urls import path
 
 
 class DXRouterMixin:
-    """Provides a interface for extracting urls from dx_route'd methods.
-    Use as a Mixin to call CLS.dx_router() to get a list of djxi routes
+    """Provides a interface for extracting urls from methods wrapped with dx_action.
+    Use as a Mixin to call CLS.url_patterns() to get a list of djxi routes
     """
 
     @classmethod
-    def dx_router(cls) -> list:
+    def url_patterns(cls) -> list:
         """
         Generate a list of Django URL patterns from all methods decorated with @route.
-        Use the class method to DXEndpointBattery.dx_router() in the url conf to hook the routes
+        Use the class method to DXEndpointBattery.url_patterns() in the url conf to hook the routes
         """
         patterns = []
 
@@ -45,7 +40,7 @@ class DXRouterMixin:
         return patterns
 
 
-def dx_route(path: str, methods: [] = None, **kwargs):
+def dx_action(path: str, methods: [] = None, **kwargs):
     """
     Decorator to mark a class method as a URL endpoint.
     - path: URL path (can include Django path converters, e.g. '/items/<int:id>/')
@@ -69,37 +64,29 @@ def dx_route(path: str, methods: [] = None, **kwargs):
 #
 # Alias definitions
 #
-def dx_GET(path: str, **kwargs):
-    return dx_route(path, ["GET"], **kwargs)
+def dx_get(path: str, **kwargs):
+    return dx_action(path, ["GET"], **kwargs)
 
 
-def dx_HEAD(path: str, **kwargs):
-    return dx_route(path, ["HEAD"], **kwargs)
+def dx_head(path: str, **kwargs):
+    return dx_action(path, ["HEAD"], **kwargs)
 
 
-def dx_POST(path: str, **kwargs):
-    return dx_route(path, ["POST"], **kwargs)
+def dx_post(path: str, **kwargs):
+    return dx_action(path, ["POST"], **kwargs)
 
 
-def dx_PUT(path: str, **kwargs):
-    return dx_route(path, ["PUT"], **kwargs)
+def dx_put(path: str, **kwargs):
+    return dx_action(path, ["PUT"], **kwargs)
 
 
-def dx_PATCH(path: str, **kwargs):
-    return dx_route(path, ["PATCH"], **kwargs)
+def dx_patch(path: str, **kwargs):
+    return dx_action(path, ["PATCH"], **kwargs)
 
 
-def dx_DELETE(path: str, **kwargs):
-    return dx_route(path, ["DELETE"], **kwargs)
+def dx_delete(path: str, **kwargs):
+    return dx_action(path, ["DELETE"], **kwargs)
 
 
-def dx_OPTIONS(path: str, **kwargs):
-    return dx_route(path, ["OPTIONS"], **kwargs)
-
-
-def dx_ANY(path: str, **kwargs):
-    return dx_route(
-        path,
-        ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-        **kwargs,
-    )
+def dx_options(path: str, **kwargs):
+    return dx_action(path, ["OPTIONS"], **kwargs)

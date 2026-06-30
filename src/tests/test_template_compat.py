@@ -3,7 +3,7 @@ from django.test import override_settings, RequestFactory, modify_settings
 from django.urls import path, include, resolve, reverse
 
 from djxi.endpoint import DXEndpointBattery
-from djxi.router import dx_route
+from djxi.router import dx_action
 
 INLINE_TEMPLATE = """
 <dx-section name="hello-world">
@@ -29,34 +29,34 @@ INLINE_TEMPLATE = """
 class InlineActionRouter(DXEndpointBattery):
     section_inline = INLINE_TEMPLATE
 
-    @dx_route("hello/<str:name>", methods=["GET"], name="hello_world")
+    @dx_action("hello/<str:name>", methods=["GET"], name="hello_world")
     def hallo_du(self, request, name: str):
         context = {"name": name}
         return self.render_section(request, "hello-world", context)
 
-    @dx_route("hello-all", methods=["GET"], name="hello_many")
+    @dx_action("hello-all", methods=["GET"], name="hello_many")
     def hello_many(self, request):
         context = {"names": ["Django", "World", "Python"]}
         return self.render_section(request, "hello-many", context)
 
-    @dx_route("hello-filter/<str:number>", methods=["GET"])
+    @dx_action("hello-filter/<str:number>", methods=["GET"])
     def hello_filter(self, request, number: str):
         context = {"number": number}
         return self.render_section(request, "hello-filter", context)
 
-    @dx_route("hello-humanize/<str:number>", methods=["GET"])
+    @dx_action("hello-humanize/<str:number>", methods=["GET"])
     def hello_humanize(self, request, number: str):
         return self.render_section(request, "hello-humanize", {"number": number})
 
-    @dx_route("hello_include", methods=["GET"])
+    @dx_action("hello_include", methods=["GET"])
     def hello_include(self, request):
         context = {"names": ["Django", "World", "Python"]}
         return self.render_section(request, "hello-include", context)
 
 
-# URL Patterns from .dx_router
+# URL Patterns from .url_patterns
 urlpatterns = [
-    path("", include((InlineActionRouter.dx_router(), "djxi"), namespace="djxi"))
+    path("", include((InlineActionRouter.url_patterns(), "djxi"), namespace="djxi"))
 ]
 
 

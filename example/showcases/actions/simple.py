@@ -1,6 +1,6 @@
 from django.contrib import messages
 from djxi.endpoint import DXEndpointBattery
-from djxi.router import dx_route
+from djxi.router import dx_action
 
 TEMPLATE = """
 <dx-section name="agreement">
@@ -23,21 +23,21 @@ TEMPLATE = """
 class SimpleInlineActionRouter(DXEndpointBattery):
     section_inline = TEMPLATE
 
-    @dx_route("agreement", methods=["GET"])
+    @dx_action("agreement", methods=["GET"])
     def get_agreement(self, request):
-        # name parameter is not defined in dx_route; defaults to func.__name__
+        # name parameter is not defined in dx_action; defaults to func.__name__
         return self.render_section(request, "agreement")
 
-    @dx_route("get-check-button", methods=["GET"], name="load-check-button")
+    @dx_action("get-check-button", methods=["GET"], name="load-check-button")
     def get_check_button(self, request):
-        # name parameter of dx_route is defined overriding the func.__name__
+        # name parameter of dx_action is defined overriding the func.__name__
         context = {"name": "Phil"}
         messages.info(request, "Ready for confirmation!")
         return self.render_section(
             request, section_name="check-button", context=context
         )
 
-    @dx_route("confirm", methods=["PUT", "POST"])
+    @dx_action("confirm", methods=["PUT", "POST"])
     def confirm(self, request):
         # Using the django.contrib.messages framework - self.render_section will handle the swap oob injection
         messages.success(request, "Thanks for confirming!")

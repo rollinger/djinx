@@ -2,7 +2,7 @@
 from django.test import override_settings, RequestFactory
 from django.urls import path, include, resolve, reverse
 from djxi.endpoint import DXEndpointBattery
-from djxi.router import dx_route
+from djxi.router import dx_action
 
 INLINE_TEMPLATE = """
 <dx-section name="section_01">Content 1</dx-section>
@@ -14,27 +14,27 @@ INLINE_TEMPLATE = """
 class InlineActionRouter(DXEndpointBattery):
     section_inline = INLINE_TEMPLATE
 
-    @dx_route("section/1", methods=["GET"], name="nifty_first_section")
+    @dx_action("section/1", methods=["GET"], name="nifty_first_section")
     def section_01(self, request):
         return self.render_section(request, "section_01")
 
-    @dx_route("section/2/", methods=["GET"])
+    @dx_action("section/2/", methods=["GET"])
     def section_02(self, request):
         return self.render_section(request, "section_02")
 
-    @dx_route("section/3", methods=["GET", "POST"])
+    @dx_action("section/3", methods=["GET", "POST"])
     def section_03(self, request):
         return self.render_section(request, "section_03")
 
-    @dx_route("section/<int:id>", methods=["GET"], name="get_the_section_you_want")
+    @dx_action("section/<int:id>", methods=["GET"], name="get_the_section_you_want")
     def section_by_id(self, request, id):
         section_name = f"section_{id}"
         return self.render_section(request, section_name)
 
 
-# URL Patterns from .dx_router
+# URL Patterns from .url_patterns
 urlpatterns = [
-    path("", include((InlineActionRouter.dx_router(), "djxi"), namespace="djxi"))
+    path("", include((InlineActionRouter.url_patterns(), "djxi"), namespace="djxi"))
 ]
 
 
