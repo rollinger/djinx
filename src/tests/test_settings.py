@@ -31,13 +31,17 @@ def test_app_ready_checks():
         # Test HTMX VERSION
         with override_settings(DX_HTMX_VERSION="99"):
             app.ready()
+    with pytest.raises(ImproperlyConfigured):
         # Test compress level
         with override_settings(DX_HTMX_COMPRESSION=".bs.gz"):
             app.ready()
-        # Test Section Tag
+    # Test Section Tag Config Error
+    with pytest.raises(ImproperlyConfigured):
         with override_settings(DX_SECTION_TAG=""):
             app.ready()
+    with pytest.raises(ImproperlyConfigured):
         with override_settings(DX_SECTION_TAG=None):
             app.ready()
+    with pytest.raises(ImproperlyConfigured):
         with override_settings(DX_SECTION_TAG=99):
             app.ready()
