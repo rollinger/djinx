@@ -16,8 +16,11 @@ class DjxiAppConfig(AppConfig):
         from .conf import package_settings
 
         htmx_version = package_settings.DX_HTMX_VERSION
+        htmx_compress = package_settings.DX_HTMX_COMPRESSION
         if htmx_version not in ["2", "4"]:
-            raise ImproperlyConfigured("DX_HTMX_VERSION must be 2 or 4")
+            raise ImproperlyConfigured("DX_HTMX_VERSION must be 2 or 4!")
+        if htmx_compress not in [".js", ".min.js"]:
+            raise ImproperlyConfigured("DX_HTMX_COMPRESSION must be .js or .min.js!")
 
         section_tag = package_settings.DX_SECTION_TAG
         if not isinstance(section_tag, str) or section_tag == "":

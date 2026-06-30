@@ -1,14 +1,15 @@
 from django.template import Library
-from djxi.conf import package_settings as djxi_settings
+from djxi.conf import package_settings as djxi_settings, HTMX_CDN_PATHS
 
 register = Library()
 
 
 @register.inclusion_tag("djxi/htmx_script.html")
 def htmx_script_inclusion():
-    minified = ".min" if djxi_settings.DX_HTMX_MINIFIED is True else ""
     version = djxi_settings.DX_HTMX_VERSION
-    return {"version": version, "minified": minified}
+    compression = djxi_settings.DX_HTMX_COMPRESSION
+    cdn_path = HTMX_CDN_PATHS[version][compression]
+    return {"htmx_cdn_path": cdn_path[0], "integrity": cdn_path[1]}
 
 
 @register.inclusion_tag("djxi/htmx_headers.html")
