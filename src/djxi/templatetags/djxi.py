@@ -7,7 +7,8 @@ register = Library()
 @register.inclusion_tag("djxi/htmx_script.html")
 def htmx_script_inclusion():
     minified = ".min" if djxi_settings.DX_HTMX_MINIFIED is True else ""
-    return {"version": djxi_settings.DX_HTMX_VERSION, "minified": minified}
+    version = djxi_settings.DX_HTMX_VERSION
+    return {"version": version, "minified": minified}
 
 
 @register.inclusion_tag("djxi/htmx_headers.html")
