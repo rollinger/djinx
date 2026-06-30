@@ -13,6 +13,46 @@
 ---
 
 ## 📦 What is this?
+    Just a prenup between Grandpa Django and his sexy new HTMX fling — preventing scatterbrain syndrome and reactive dysfunction.
+
+Django's API was written with full page reloads in mind. The separation into view, urls and template made sense. 
+HTMX introduces partial updates via server-side html snippets that updates the page selectively.
+Using Django with HTMX usually results in a scattering of a multitudes of small templates, views and endpoints.
+This is bad news for "Locality of Behaviour" and affect maintability of projects the more they make use of HTMX.
+
+### Djxi's solution:
+Bundle HTMX urls, views and template collection all into one or more `DXEndpointBattery`. 
+```python
+from djxi import DXEndpointBattery, dx_action 
+
+INLINE_TEMPLATE = """
+<dx-section name="todo-list">
+    <div hx-get={% url "load-todo-list" %} hx-trigger="load delay:100ms">
+        <h3>TODO</h3>
+        <div id="todo-list"></div>
+    </div>
+</dx-section>
+
+<dx-section name="todo-item">
+    <button disabled>Confirmed!</button>
+</dx-section>
+"""
+
+
+class SimpleInlineActionRouter(DXEndpointBattery):
+    inline_template = INLINE_TEMPLATE
+
+    @dx_action("get-confirm-button", methods=["GET"])
+    def get_confirm_button(self, request):
+        context = {"name": "Phil"}
+        return self.render_section(
+            request, section_name="confirm-button", context=context
+        )
+```
+Djxi is a opinionated yet frictionless HTMX drop-in. It can be run in parallel to vanilla Django views or even 
+alongside the way you used to use HTMX.
+
+### Inline Templates?
 
 **Stop hunting for HTMX endpoints.**  
 Djxi bundles the route, the view logic, and the HTML partial into a single **Endpoint Battery**. 
