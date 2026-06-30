@@ -18,9 +18,10 @@ def htmx_headers():
     return {"explicit_inheritance": explicit_inheritance}
 
 
-@register.inclusion_tag("djxi/messages/message_container.html")
-def flash_messages_inclusion():
+@register.inclusion_tag("djxi/messages/message_container.html", takes_context=True)
+def flash_messages_inclusion(context):
     return {
+        "messages": context.get("messages", []),
         "msg_container_id": djxi_settings.DX_MESSAGE_CONTAINER_ID,
         "msg_swap_method": djxi_settings.DX_MESSAGE_SWAP_METHOD,
         "msg_template": djxi_settings.DX_MESSAGE_TEMPLATE,

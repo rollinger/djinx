@@ -10,7 +10,7 @@ DEFAULTS = {
     # Messaging integration
     "DX_MESSAGE_CONTAINER_ID": "message-container",
     "DX_MESSAGE_SWAP_METHOD": "beforeend",
-    "DX_MESSAGE_TEMPLATE": "djxi/messages/message_item.html",
+    "DX_MESSAGE_TEMPLATE": "djxi/messages/message_list.html",
 }
 
 HTMX_CDN_PATHS = {

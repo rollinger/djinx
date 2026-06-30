@@ -30,7 +30,7 @@ class SimpleInlineActionRouter(DXEndpointBattery):
 
     @dx_route("get-check-button", methods=["GET"], name="load-check-button")
     def get_check_button(self, request):
-        # name parameter of dx_route is defined
+        # name parameter of dx_route is defined overriding the func.__name__
         context = {"name": "Phil"}
         messages.info(request, "Ready for confirmation!")
         return self.render_section(
@@ -39,5 +39,6 @@ class SimpleInlineActionRouter(DXEndpointBattery):
 
     @dx_route("confirm", methods=["PUT", "POST"])
     def confirm(self, request):
+        # Using the django.contrib.messages framework - self.render_section will handle the swap oob injection
         messages.success(request, "Thanks for confirming!")
         return self.render_section(request, "check-confirmed")

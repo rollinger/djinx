@@ -26,6 +26,6 @@ class DXEndpointBattery(DXSectionMixin, DXRouterMixin):
         if context is None:
             context = {}
         raw_html = self.get_section(section_name)
-        msg_html = fetch_messages_template(request)
-        template = Template(raw_html + msg_html)
+        raw_html += fetch_messages_template(request)
+        template = Template(raw_html)
         return HttpResponse(template.render(RequestContext(request, context)))

@@ -61,6 +61,7 @@ class SectionParser(HTMLParser):
 
 def load_django_template(template_name: str) -> str:
     """Loads a Django template from the given name."""
+    # TODO: REfactor into better name: load_django_template_string
     template_string = ""
     # If template_name references a filesystem path, read it directly.
     # In that case template name has to be an absolute path (this is mainly for the test suite)
