@@ -1,7 +1,11 @@
-from django.test import override_settings
-
+from django.template import RequestContext
+from django.test import override_settings, RequestFactory
 from djxi.conf import package_settings as djxi_settings, HTMX_CDN_PATHS
-from djxi.templatetags.djxi import htmx_script_inclusion, htmx_headers
+from djxi.templatetags.djxi import (
+    htmx_script_inclusion,
+    htmx_headers,
+    flash_messages_inclusion,
+)
 
 
 def test_htmx_script_inclusion():
@@ -28,3 +32,13 @@ def test_htmx_headers():
     with override_settings(DX_HTMX_VERSION="2"):
         tag = htmx_headers()
         assert tag["explicit_inheritance"] is False
+
+
+def test_flash_message_inclusion():
+    request = RequestFactory().get("/")
+    context = RequestContext(request)
+    tag = flash_messages_inclusion(context)
+    assert tag["messages"] == []
+    assert tag["msg_container_id"] == "message-container"
+    assert tag["msg_swap_method"] == "beforeend"
+    assert tag["msg_template"] == "djxi/messages/message_list.html"

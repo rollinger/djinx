@@ -13,9 +13,13 @@ if not settings.configured:
         INSTALLED_APPS=[
             "django.contrib.auth",
             "django.contrib.contenttypes",
+            "django.contrib.messages",
             "djxi",
         ],
-        MIDDLEWARE=[],  # empty for speed
+        MIDDLEWARE=[
+            "django.contrib.sessions.middleware.SessionMiddleware",
+            "django.contrib.messages.middleware.MessageMiddleware",
+        ],
         TEMPLATES=[
             {
                 "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -24,6 +28,7 @@ if not settings.configured:
                 "OPTIONS": {
                     "context_processors": [
                         "django.template.context_processors.request",
+                        "django.contrib.messages.context_processors.messages",
                     ],
                 },
             }

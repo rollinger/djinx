@@ -28,8 +28,13 @@ def test_app_ready_checks():
     mod.__file__ = __file__
     app = DjxiAppConfig("djxi", mod)
     with pytest.raises(ImproperlyConfigured):
+        # Test HTMX VERSION
         with override_settings(DX_HTMX_VERSION="99"):
             app.ready()
+        # Test compress level
+        with override_settings(DX_HTMX_COMPRESSION=".bs.gz"):
+            app.ready()
+        # Test Section Tag
         with override_settings(DX_SECTION_TAG=""):
             app.ready()
         with override_settings(DX_SECTION_TAG=None):

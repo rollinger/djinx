@@ -24,7 +24,7 @@ class DjxiAppConfig(AppConfig):
 
         section_tag = package_settings.DX_SECTION_TAG
         if not isinstance(section_tag, str) or section_tag == "":
-            raise ImproperlyConfigured("DX_SECTION_TAG can not be None or empty")
+            raise ImproperlyConfigured("DX_SECTION_TAG must be a non-empty string!")
 
         # Optional: Import signals if you have a signals.py file
         # import mypackage.signals
