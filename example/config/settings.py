@@ -132,4 +132,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 #
 # Djxi Settings overrides
 #
+DX_HTMX_VERSION: "2"
 DX_HTMX_MINIFIED = False

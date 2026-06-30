@@ -1,5 +1,6 @@
 from django.contrib import messages
-from djxi.actions import DXEndpointBattery, dx_route
+from djxi.endpoint import DXEndpointBattery
+from djxi.router import dx_route
 
 
 class ParameterInlineActionRouter(DXEndpointBattery):
