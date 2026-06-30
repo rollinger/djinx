@@ -7,7 +7,7 @@ def test_fetch_messages_template():
     request = HttpRequest()
     empty_str = fetch_messages_template(request)
     assert empty_str == ""
-    # Fake a message without the message overhead
+    # Fake a message without the django.contrib.messages overhead
     setattr(request, "_messages", ["HAS", "SOME", "MESSAGES"])
     non_empty_str = fetch_messages_template(request)
     assert non_empty_str != ""
