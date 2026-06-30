@@ -1,6 +1,7 @@
 # v0.1.5 (HEAD)
+- htmx cdn integration with correct integrity sha
 - messaging with htmx 2 (swap-oob)
-- 
+- stash the Verbatim Parser
 - codecoverage 100%
 
 # v0.1.4 (0841e04)
