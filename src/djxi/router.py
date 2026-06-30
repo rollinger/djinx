@@ -3,6 +3,8 @@ from functools import wraps
 from django.http import HttpResponseNotAllowed
 from django.urls import path
 
+SUPPORTED_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"]
+
 
 class DXRouterMixin:
     """Provides a interface for extracting urls from methods wrapped with dx_action.
@@ -14,6 +16,7 @@ class DXRouterMixin:
         """
         Generate a list of Django URL patterns from all methods decorated with @route.
         Use the class method to DXEndpointBattery.url_patterns() in the url conf to hook the routes
+        # TODO: avoid naming collisions: _routes -> _dx_routes
         """
         patterns = []
 
@@ -50,6 +53,14 @@ def dx_action(path: str, methods: [] = None, **kwargs):
     """
     if methods is None:
         methods = ["GET"]
+    methods = [m.upper() for m in methods]
+    # Return a noop decorator if any method is not in the SUPPORTED METHODS
+    if not all(m in SUPPORTED_METHODS for m in methods):
+
+        def decorator_noop(func):
+            return func
+
+        return decorator_noop
 
     def decorator(func):
         name = kwargs.pop("name", func.__name__)

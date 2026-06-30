@@ -1,6 +1,7 @@
 # fmt: off
+import pytest
 from django.test import override_settings, RequestFactory
-from django.urls import path, include, resolve, reverse
+from django.urls import path, include, resolve, reverse, Resolver404
 from djxi.endpoint import DXEndpointBattery
 from djxi.router import dx_action
 
@@ -31,6 +32,15 @@ class InlineActionRouter(DXEndpointBattery):
         section_name = f"section_{id}"
         return self.render_section(request, section_name)
 
+    @dx_action("section/no-method", methods=None, name="no_method")
+    def section_no_method(self, request):
+        # This should default to a GET
+        return self.render_section(request, "section_01")
+
+    @dx_action("section/bad-method", methods=["BAD"], name="bad_method")
+    def section_bad_method(self, request):
+        # This should not be included in the url_patterns of the router
+        return self.render_section(request, "section_01")
 
 # URL Patterns from .url_patterns
 urlpatterns = [
@@ -81,3 +91,19 @@ def test_name_override_resolver():
     assert request_path == "/section/4"
     match = resolve(request_path)
     assert match.func.__name__ == "section_by_id"
+
+@override_settings(ROOT_URLCONF=__name__)
+def test_empty_http_method():
+    match = resolve("/section/no-method")
+    func = match.func
+    assert func.__name__ == "section_no_method"
+    assert len(func._routes) == 1
+    assert func._routes[0][1] == ['GET']
+
+    #with pytest.raises(HttpResponseNotAllowed):
+    #assert isinstance(req, HttpResponseNotAllowed) is True
+
+@override_settings(ROOT_URLCONF=__name__)
+def test_bad_http_method():
+    with pytest.raises(Resolver404):
+        resolve("/section/bad-method")
