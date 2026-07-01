@@ -1,4 +1,8 @@
-# v0.1.5 (HEAD)
+# v0.1.6 (HEAD)
+- Example todo list
+- HX-Headers Integration
+- Django Class based Views Integration
+# v0.1.5 (98f2d06)
 - htmx cdn integration with correct integrity sha
 - messaging with htmx 2 (swap-oob); works in 4 too
 - stash the Verbatim Parser, accept the transform of the normal HTMLParser
