@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Showcase Django HTMX Integration
     "djxi",
     "showcases",
+    "todo",
 ]
 
 MIDDLEWARE = [

@@ -6,6 +6,7 @@ from djxi.parser import SectionParser, load_django_template
 class DXSectionMixin:
     """Mixin of functionality to extract sections from templates and inline strings."""
 
+    # TODO: Rename in inline_template and template_name to match Django convention.
     section_inline = None
     section_template_name = None
 

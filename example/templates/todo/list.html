@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div id="todo-list_container"
+         hx-get='{% url "todo:list" %}' hx-trigger="load delay:300ms" hx-swap="outerHTML"></div>
+{% endblock %}
