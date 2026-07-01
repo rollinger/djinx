@@ -128,3 +128,5 @@ In your settings file you can overide the following default values for Djxi:
 - **DX_HTMX_COMPRESSION**: ".js"  # allow: ['.js','.min.js']
 - **DX_SECTION_TAG**: "dx-section" # html tag to delineate html snippets
 
+## FAQ
+- **Why HTMX 4** Djxi defaults to HTMX 4 as it is the up and comming iteration on version 2, with many changes and improvement. While it works with HTMX 2 as well, in the future Djxi may drop support for HTMX 2.
