@@ -12,16 +12,30 @@
 
 ---
 
+**Stop scrolling for scattered HTMX!**
+
+Djxi lets you architect your HTMX widgets in one single **Endpoint Battery**. It bundles the urls, view logic, and the HTML into a central hub. The feature lives in one place — without scattering your code across `urls.py`, `views/`, and `templates/`.
+
+- **No more archaeology.** No more digging through three files just to tweak a button label.  
+- **Locality of Behaviour** Request → Logic → Render stays in one class.  
+- **Scales cleanly.** Small partials stay manageable, without turning your project into spaghetti.
+- **Django Integration.** Tag, Filters, Messages, HX-Headers, CBV and more are all integrated into Django. 
+
 ## 📦 What is this?
     Just a prenup between Grandpa Django and his sexy new HTMX fling — preventing scatterbrain syndrome and reactive dysfunction.
 
-Django's API was written with full page reloads in mind. The separation into view, urls and template made sense. 
-HTMX introduces partial updates via server-side html snippets that updates the page selectively.
-Using Django with HTMX usually results in a scattering of a multitudes of small templates, views and endpoints.
-This is bad news for "Locality of Behaviour" and affect maintability of projects the more they make use of HTMX.
+Django's Request-Render-Response cycle was architected with full page reloads in mind. The separation into views, urls and templates is practical when the response affect the whole of the client's state.
+
+HTMX introduces minute partial updates via server-side rendered html snippets which update the page selectively and asynchronly. Those small page updates have to be orchestrated and maintained, each with its own view, url and template.
+
+Using Django with HTMX usually results in a scattering of a multitude of template snippest, view logics and url endpoints.
+
+Consider a simple CRUD Todo List: that is 4 urls, 4 views and 5 templates, if you do it with HTMX and create a partial for a todo item. This count can easily go up, as soon as the urge to allow in-place smart actions is given in. The number is not the problem it is the scattering of those snippets (url, view, html) over the codebase under vanilla Django best practices.
+
+Therefor the marriage of Django and HTMX can be bad news for "Locality of Behaviour" and affect maintability of projects the more it make use of HTMX.
 
 ### Djxi's solution:
-Bundle HTMX urls, views and template collection all into one or more `DXEndpointBattery`. 
+Bundle HTMX urls, views and template collection all into one or more `DXEndpointBattery`. Here the feature 'todo-list' with all it's actions is described in full and obious at a glace in one central place.
 ```python
 from djxi import DXEndpointBattery, dx_action 
 
@@ -49,20 +63,19 @@ class SimpleInlineActionRouter(DXEndpointBattery):
             request, section_name="confirm-button", context=context
         )
 ```
-Djxi is a opinionated yet frictionless HTMX drop-in. It can be run in parallel to vanilla Django views or even 
+Djxi is a opinionated yet frictionless HTMX drop-in. It can be run in parallel to vanilla Django views and even 
 alongside the way you used to use HTMX.
 
+Drop Djxi in and start streamline new or old HTMX Widgets.
+
 ### Inline Templates?
+HTML in a multiline string? Bäh, I loose all the template syntax higllighting!
+No problem at all, just use the template_name with a path to your template instead of the inline template. You can deal with two files per feature set.
 
-**Stop hunting for HTMX endpoints.**  
-Djxi bundles the route, the view logic, and the HTML partial into a single **Endpoint Battery**. 
-Drop the `DXEndpointBattery` into your existing Django views or use it standalone. Keep every tiny `hx-*` swap exactly where it lives—without scattering your code across `urls.py`, `views/`, and `templates/`.
+### Spice up Django CBV
+### Integrate with django.contrib.messages
+### Expose HX-Headers per middleware
 
-- **No more archaeology.** No more digging through three files just to tweak a button label.  
-- **LoB, restored.** Request → Logic → Render stays in one atomic, inline hub.  
-- **Scales cleanly.** Small partials stay manageable, without turning your project into spaghetti.
-
-Just a prenup between Grandpa Django and his sexy new HTMX fling—keeping your repo clean, one battery at a time.
 
 ## Pre-Alpha Note
 The package is considered in experimental pre-alpha state, use with caution.
