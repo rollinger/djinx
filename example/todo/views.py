@@ -49,7 +49,7 @@ INLINE_TEMPLATE = """
 class TodoListDXBattery(DXEndpointBattery):
     section_inline = INLINE_TEMPLATE
 
-    @dx_action("todo-list", methods=["GET", "POST"], name="list")
+    @dx_action("list", methods=["GET"], name="list")
     def list(self, request):
         context = {}
         items = TodoListItem.objects.all()
@@ -61,8 +61,8 @@ class TodoListDXBattery(DXEndpointBattery):
         context = {"todo_items": items}
         return self.render_section(request, section_name="todo-list", context=context)
 
-    @dx_action("todo-list/<int:item_id>", methods=["GET"], name="item")
-    @dx_action("todo-list/<int:item_id>/detail", methods=["GET"], name="item-detail")
+    @dx_action("item/<int:item_id>", methods=["GET"], name="item")
+    @dx_action("item/<int:item_id>/detail", methods=["GET"], name="item-detail")
     def item(self, request, item_id):
         context = {"item": TodoListItem.objects.get(id=item_id)}
         if request.resolver_match.url_name == "item":
