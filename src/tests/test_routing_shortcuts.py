@@ -8,11 +8,7 @@ from djxi.router import (
     dx_put,
     dx_patch,
     dx_delete,
-    dx_options,
-    dx_head,
 )
-
-SUPPORTED_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"]
 
 
 class InlineActionRouter(DXEndpointBattery):
@@ -36,14 +32,6 @@ class InlineActionRouter(DXEndpointBattery):
 
     @dx_delete("act/delete/", name="delete-stuff")
     def action_delete(self, request):
-        return self.render_section(request, "section_01")
-
-    @dx_options("act/options/", name="option-stuff")
-    def action_option(self, request):
-        return self.render_section(request, "section_01")
-
-    @dx_head("act/head/", name="head-stuff")
-    def action_head(self, request):
         return self.render_section(request, "section_01")
 
 
@@ -72,18 +60,8 @@ def test_path_resolver():
             "method": ["DELETE"],
             "content": "Content 1",
         },
-        "/act/options/": {
-            "view": "action_option",
-            "method": ["OPTIONS"],
-            "content": "Content 1",
-        },
-        "/act/head/": {
-            "view": "action_head",
-            "method": ["HEAD"],
-            "content": "Content 1",
-        },
     }
     for request_path, truth in true_methods.items():
         match = resolve(request_path)
         assert match.func.__name__ == truth["view"]
-        assert match.func._routes[0][1] == truth["method"]
+        assert match.func._dx_routes[0][1] == truth["method"]

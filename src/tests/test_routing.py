@@ -97,8 +97,8 @@ def test_empty_http_method():
     match = resolve("/section/no-method")
     func = match.func
     assert func.__name__ == "section_no_method"
-    assert len(func._routes) == 1
-    assert func._routes[0][1] == ['GET']
+    assert len(func._dx_routes) == 1
+    assert func._dx_routes[0][1] == ['GET']
 
     #with pytest.raises(HttpResponseNotAllowed):
     #assert isinstance(req, HttpResponseNotAllowed) is True

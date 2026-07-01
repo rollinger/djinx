@@ -3,7 +3,7 @@ from functools import wraps
 from django.http import HttpResponseNotAllowed
 from django.urls import path
 
-SUPPORTED_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"]
+DX_SUPPORTED_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 
 
 class DXRouterMixin:
@@ -16,14 +16,13 @@ class DXRouterMixin:
         """
         Generate a list of Django URL patterns from all methods decorated with @route.
         Use the class method to DXEndpointBattery.url_patterns() in the url conf to hook the routes
-        # TODO: avoid naming collisions: _routes -> _dx_routes
         """
         patterns = []
 
         for attr_name in dir(cls):
             attr = getattr(cls, attr_name)
-            if hasattr(attr, "_routes"):
-                for url_path, methods, name in attr._routes:
+            if hasattr(attr, "_dx_routes"):
+                for url_path, methods, name in attr._dx_routes:
                     # Create a view that instantiates the class and calls the method
                     def make_view(method_name, allowed_methods, attr_func=attr):
                         @wraps(attr_func)
@@ -55,7 +54,7 @@ def dx_action(path: str, methods: [] = None, **kwargs):
         methods = ["GET"]
     methods = [m.upper() for m in methods]
     # Return a noop decorator if any method is not in the SUPPORTED METHODS
-    if not all(m in SUPPORTED_METHODS for m in methods):
+    if not all(m in DX_SUPPORTED_METHODS for m in methods):
 
         def decorator_noop(func):
             return func
@@ -64,23 +63,19 @@ def dx_action(path: str, methods: [] = None, **kwargs):
 
     def decorator(func):
         name = kwargs.pop("name", func.__name__)
-        if not hasattr(func, "_routes"):
-            func._routes = []
-        func._routes.append((path, methods, name))
+        if not hasattr(func, "_dx_routes"):
+            func._dx_routes = []
+        func._dx_routes.append((path, methods, name))
         return func
 
     return decorator
 
 
 #
-# Alias definitions
+# Alias definitions (Shortcuts)
 #
 def dx_get(path: str, **kwargs):
     return dx_action(path, ["GET"], **kwargs)
-
-
-def dx_head(path: str, **kwargs):
-    return dx_action(path, ["HEAD"], **kwargs)
 
 
 def dx_post(path: str, **kwargs):
@@ -97,7 +92,3 @@ def dx_patch(path: str, **kwargs):
 
 def dx_delete(path: str, **kwargs):
     return dx_action(path, ["DELETE"], **kwargs)
-
-
-def dx_options(path: str, **kwargs):
-    return dx_action(path, ["OPTIONS"], **kwargs)
