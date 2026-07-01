@@ -60,3 +60,4 @@ example/media/
 
 # Custom ignores
 FRAGMENTS.md
+coverage.xml
