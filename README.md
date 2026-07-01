@@ -14,15 +14,16 @@
 
 **Stop scrolling for scattered HTMX!**
 
-Djxi lets you architect your HTMX widgets in one single **Endpoint Battery**. It bundles the urls, view logic, and the HTML into a central hub. The feature lives in one place — without scattering your code across `urls.py`, `views/`, and `templates/`.
+Djxi lets you architect your HTMX widgets in one single **Endpoint Battery**. It bundles the urls, view logic, and the HTML into a central hub. The feature lives in one place — without scattering your code across `urls`, `views`, and `templates`.
 
 - **No more archaeology.** No more digging through three files just to tweak a button label.  
 - **Locality of Behaviour** Request → Logic → Render stays in one class.  
 - **Scales cleanly.** Small partials stay manageable, without turning your project into spaghetti.
-- **Django Integration.** Tag, Filters, Messages, HX-Headers, CBV and more are all integrated into Django. 
+- **Django Integration.** Tags, Filters, Messages, HX-Headers, CBV and more are frictionless integrated. 
 
 ## 📦 What is this?
-    Just a prenup between Grandpa Django and his sexy new HTMX fling — preventing scatterbrain syndrome and reactive dysfunction.
+    Just a prenup between Grandpa Django and his sexy new HTMX fling — 
+    preventing scatterbrain syndrome and reactive dysfunction.
 
 Django's Request-Render-Response cycle was architected with full page reloads in mind. The separation into views, urls and templates is practical when the response affect the whole of the client's state.
 
@@ -32,10 +33,10 @@ Using Django with HTMX usually results in a scattering of a multitude of templat
 
 Consider a simple CRUD Todo List: that is 4 urls, 4 views and 5 templates, if you do it with HTMX and create a partial for a todo item. This count can easily go up, as soon as the urge to allow in-place smart actions is given in. The number is not the problem it is the scattering of those snippets (url, view, html) over the codebase under vanilla Django best practices.
 
-Therefor the marriage of Django and HTMX can be bad news for "Locality of Behaviour" and affect maintability of projects the more it make use of HTMX.
+Therefore the marriage of Django and HTMX can be bad news for [Locality of Behaviour](https://htmx.org/essays/locality-of-behaviour/) and affect maintability of projects the more it make use of HTMX.
 
 ### Djxi's solution:
-Bundle HTMX urls, views and template collection all into one or more `DXEndpointBattery`. Here the feature 'todo-list' with all it's actions is described in full and obious at a glace in one central place.
+Bundle HTMX urls, views and template collection all into one or more `DXEndpointBattery`. Here the 'todo-list' feature with all it's actions is described in full in one place and obvious at a glace.
 ```python
 from djxi import DXEndpointBattery, dx_action 
 
@@ -63,22 +64,24 @@ class SimpleInlineActionRouter(DXEndpointBattery):
             request, section_name="confirm-button", context=context
         )
 ```
-Djxi is a opinionated yet frictionless HTMX drop-in. It can be run in parallel to vanilla Django views and even 
+Djxi is an opinionated and frictionless HTMX drop-in. It can be run in parallel to vanilla Django views and even 
 alongside the way you used to use HTMX.
 
-Drop Djxi in and start streamline new or old HTMX Widgets.
+`pip install djxi` and streamline new and old HTMX functionalities.
 
 ### Inline Templates?
-HTML in a multiline string? Bäh, I loose all the template syntax higllighting!
-No problem at all, just use the template_name with a path to your template instead of the inline template. You can deal with two files per feature set.
+    HTML in a multiline string? Bäh, I loose all the template syntax higllighting!
+
+No problem at all! Just use the `template_name` with a path to your template instead of the `inline_template`. You can deal with two files per feature set!
 
 ### Spice up Django CBV
 ### Integrate with django.contrib.messages
 ### Expose HX-Headers per middleware
 
 
-## Pre-Alpha Note
-The package is considered in experimental pre-alpha state, use with caution.
+**Pre-Alpha Note**
+The package is considered in pre-alpha state, use with as an experimental package.
+- Happy to hear from you if you like to contribute to the project.
 - Watch out for updates and consider giving it a star.
 - Checkout the djxi showcases in the example django app.
 
@@ -117,40 +120,11 @@ INSTALLED_APPS = [
 The htmx_script_inclusion tag will pull the unminified v4 from CDN. Set DX_HTMX_VERSION="2" to pull in v2.
 For prodution you likely want to serve your own minified htmx.js.
 
-As there are significant syntax changes between v4 and v2 of htmx, keep DX_HTMX_VERSION in sync with 
-what htmx version you are serving.
+As there are significant syntax changes between v4 and v2 of htmx, keep DX_HTMX_VERSION in sync with what htmx version you are using.
 
 ### Configuration
 In your settings file you can overide the following default values for Djxi:
-- DX_HTMX_VERSION": "4" # Choose between 4 and 2
-- DX_HTMX_MINIFIED": False # Load a minified source, recommended for production
+- **DX_HTMX_VERSION**: "4" # allow ['2', '4']
+- **DX_HTMX_COMPRESSION**: ".js"  # allow: ['.js','.min.js']
+- **DX_SECTION_TAG**: "dx-section" # html tag to delineate html snippets
 
-### Quick start
-Create and manage your HTMX Endpoint in a convenient Battery:
-
-```python
-from djxi.actions import DXEndpointBattery, dx_action 
-
-INLINE_TEMPLATE = """
-<dx-section name="confirm-button">
-    <button hx-post="/showcase/simple/confirm">
-        Confirm, {{ name }}
-    </button>
-</dx-section>
-
-<dx-section name="check-confirmed">
-    <button disabled>Confirmed!</button>
-</dx-section>
-"""
-
-
-class SimpleInlineActionRouter(DXEndpointBattery):
-    inline_template = INLINE_TEMPLATE
-
-    @dx_action("get-confirm-button", methods=["GET"])
-    def get_confirm_button(self, request):
-        context = {"name": "Phil"}
-        return self.render_section(
-            request, section_name="confirm-button", context=context
-        )
-```
