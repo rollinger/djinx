@@ -1,6 +1,7 @@
 from django.core.exceptions import ImproperlyConfigured
 
 from djxi.parser import SectionParser, load_django_template
+from html.parser import HTMLParser
 
 
 class DXSectionMixin:
@@ -47,3 +48,68 @@ class DXSectionMixin:
         If name cannot be found, returns empty string.
         """
         return self._dx_section_cache.get(name, "")
+
+    def get_section_included(self, name: str) -> str:
+        """Returns the djxi section from the _dx_section_cache with <dx-include name="xyz"> expanded by the
+        relevant section from the _dx_section_cache.
+        """
+        section = self.get_section(name)
+        # Expand <dx-include name="..."> tags by inserting the referenced section
+        # Preserve all other content exactly as-is (HTML, template tags, whitespace).
+
+        cache = self._dx_section_cache
+
+        def _expand(s: str, stack: set) -> str:
+            parts = []
+
+            class _Expander(HTMLParser):
+                def handle_starttag(self, tag, attrs):
+                    if tag == "dx-include":
+                        attrs_dict = dict(attrs)
+                        inc_name = attrs_dict.get("name")
+                        if inc_name:
+                            # avoid circular includes
+                            if inc_name in stack:
+                                return
+                            stack.add(inc_name)
+                            parts.append(_expand(cache.get(inc_name, ""), stack))
+                            stack.remove(inc_name)
+                        return
+
+                    attrs_str = (
+                        " " + " ".join(f'{k}="{v}"' for k, v in attrs) if attrs else ""
+                    )
+                    parts.append(f"<{tag}{attrs_str}>")
+
+                def handle_endtag(self, tag):
+                    if tag == "dx-include":
+                        return
+                    parts.append(f"</{tag}>")
+
+                def handle_data(self, data):
+                    parts.append(data)
+
+                def handle_startendtag(self, tag, attrs):
+                    if tag == "dx-include":
+                        attrs_dict = dict(attrs)
+                        inc_name = attrs_dict.get("name")
+                        if inc_name:
+                            if inc_name in stack:
+                                return
+                            stack.add(inc_name)
+                            parts.append(_expand(cache.get(inc_name, ""), stack))
+                            stack.remove(inc_name)
+                        return
+
+                    attrs_str = (
+                        " " + " ".join(f'{k}="{v}"' for k, v in attrs) if attrs else ""
+                    )
+                    parts.append(f"<{tag}{attrs_str}/>")
+
+            # run parser and return the assembled parts
+            p = _Expander()
+            p.feed(s)
+            return "".join(parts)
+
+        included_section = _expand(section, set([name]))
+        return included_section

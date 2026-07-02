@@ -7,6 +7,7 @@ DEFAULTS = {
     "DX_HTMX_VERSION": "4",  # allow ['2', '4']
     "DX_HTMX_COMPRESSION": ".js",  # allow: ['.js','.min.js']
     "DX_SECTION_TAG": "dx-section",
+    "DX_INCLUDE_TAG": "dx-include",
     # Messaging integration
     "DX_MESSAGE_CONTAINER_ID": "message-container",
     "DX_MESSAGE_SWAP_METHOD": "beforeend",
