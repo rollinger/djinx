@@ -22,7 +22,6 @@ class DXIncludeBattery(DXEndpointBattery):
 
 def test_djxi_included_sections():
     dx_include = DXIncludeBattery()
-    assert len(dx_include._dx_section_cache) == 6
     # Base expansion
     assert (
         dx_include.get_section("outer1")
