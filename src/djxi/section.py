@@ -49,7 +49,7 @@ class DXSectionMixin:
         """
         return self._dx_section_cache.get(name, "")
 
-    def get_section_included(self, name: str) -> str:
+    def get_expanded_section(self, name: str) -> str:
         """Returns the djxi section from the _dx_section_cache with <dx-include name="xyz"> expanded by the
         relevant section from the _dx_section_cache.
         """

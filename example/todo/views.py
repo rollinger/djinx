@@ -7,14 +7,13 @@ INLINE_TEMPLATE = """
 <dx-section name="todo-list">
     <div id="todo-list_container">
         <h3>TODO</h3>
-        <input type="search" name="search" value={{search}} autofocus
+        <input type="search" name="search" value="{{search}}" autofocus
            hx-post='{% url "todo:list" %}'
            hx-trigger="input changed delay:200ms, keyup[key=='Enter']"
            hx-target="#todo-list_container">
         <ul id="todo-list">
             {% for item in todo_items %}
-                {#% dx_include "todo-item" %#}
-                <li hx-get='{% url "todo:item" item.id %}' hx-trigger="load" hx-swap="outerHTML"></li>
+                <dx-include name="todo-item">
             {% endfor %}
         </ul>
     </div>
