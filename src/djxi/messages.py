@@ -1,6 +1,6 @@
 from django.contrib.messages import get_messages
 
-from djxi.parser import load_django_template
+from djxi.loader import load_django_template
 from djxi.conf import package_settings as djxi_settings
 
 
