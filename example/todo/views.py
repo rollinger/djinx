@@ -47,7 +47,7 @@ INLINE_TEMPLATE = """
 
 
 class TodoListDXBattery(DXEndpointBattery):
-    section_inline = INLINE_TEMPLATE
+    inline_template = INLINE_TEMPLATE
 
     @dx_action("list", methods=["GET", "POST"], name="list")
     def list(self, request):

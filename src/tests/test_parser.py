@@ -17,7 +17,7 @@ INLINE_TEMPLATE = f"""
 
 
 class InlineActionRouter(DXEndpointBattery):
-    section_inline = INLINE_TEMPLATE
+    inline_template = INLINE_TEMPLATE
 
 
 @override_settings(DX_SECTION_TAG=DEFAULT)

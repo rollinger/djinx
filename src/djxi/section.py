@@ -6,16 +6,15 @@ from djxi.parser import SectionParser, load_django_template
 class DXSectionMixin:
     """Mixin of functionality to extract sections from templates and inline strings."""
 
-    # TODO: Rename in inline_template and template_name to match Django convention.
-    section_inline = None
-    section_template_name = None
+    inline_template = None
+    template_name = None
 
     def __init__(self, **kwargs):
         """Constructor builds the dx section cache."""
-        if self.section_inline is None and self.section_template_name is None:
+        if self.inline_template is None and self.template_name is None:
             raise ImproperlyConfigured(
-                "DXEndpointBattery requires a definition of sections via "
-                "'section_inline' or a path to a 'section_template_name'"
+                "DXSectionMixin requires a definition of sections via "
+                "'inline_template' or a path to a 'template_name'"
             )
         self.build_section_cache()
 
@@ -37,10 +36,10 @@ class DXSectionMixin:
         Sections are read in order and later redefinition may override.
         """
         section_string = ""
-        if self.section_template_name is not None:
-            section_string = load_django_template(self.section_template_name)
-        if self.section_inline is not None:
-            section_string += self.section_inline
+        if self.template_name is not None:
+            section_string = load_django_template(self.template_name)
+        if self.inline_template is not None:
+            section_string += self.inline_template
         return section_string
 
     def get_section(self, name: str) -> str:

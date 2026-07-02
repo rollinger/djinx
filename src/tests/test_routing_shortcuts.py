@@ -12,7 +12,7 @@ from djxi.router import (
 
 
 class InlineActionRouter(DXEndpointBattery):
-    section_inline = """<dx-section name="section_01">Content 1</dx-section>"""
+    inline_template = """<dx-section name="section_01">Content 1</dx-section>"""
 
     @dx_get("act/get/", name="get-stuff")
     def action_get(self, request):

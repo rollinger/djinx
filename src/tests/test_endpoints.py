@@ -19,11 +19,11 @@ class EmptyActionRouter(DXEndpointBattery):
 
 
 class InlineActionRouter(DXEndpointBattery):
-    section_inline = INLINE_TEMPLATE
+    inline_template = INLINE_TEMPLATE
 
 
 class TemplateActionRouter(DXEndpointBattery):
-    section_template_name = "template.html"
+    template_name = "template.html"
 
 
 def test_djxi_empty_init():

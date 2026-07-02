@@ -27,7 +27,7 @@ INLINE_TEMPLATE = """
 
 
 class InlineActionRouter(DXEndpointBattery):
-    section_inline = INLINE_TEMPLATE
+    inline_template = INLINE_TEMPLATE
 
     @dx_action("hello/<str:name>", methods=["GET"], name="hello_world")
     def hallo_du(self, request, name: str):

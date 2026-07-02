@@ -5,7 +5,7 @@ from djxi.router import dx_action
 
 class ParameterInlineActionRouter(DXEndpointBattery):
     # Using a template instead of an inline string
-    section_template_name = "showcases/sections/counter.html"
+    template_name = "showcases/sections/counter.html"
 
     @dx_action("counter", methods=["GET"])
     def counter(self, request):

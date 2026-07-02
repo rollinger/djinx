@@ -21,7 +21,7 @@ TEMPLATE = """
 
 
 class SimpleInlineActionRouter(DXEndpointBattery):
-    section_inline = TEMPLATE
+    inline_template = TEMPLATE
 
     @dx_action("agreement", methods=["GET"])
     def get_agreement(self, request):
