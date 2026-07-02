@@ -1,6 +1,10 @@
 from html.parser import HTMLParser
-
 from djxi.conf import package_settings as djxi_settings
+from djxi.error import (
+    CircularIncludedSection,
+    MissingIncludedSection,
+    IncludeTagMissingName,
+)
 
 
 class SectionParser(HTMLParser):
@@ -96,13 +100,15 @@ class SectionExpander(HTMLParser):
         # detect cycle
         if name in self._current_stack:
             if self.debug:
-                raise RuntimeError(f"Circular include detected for section '{name}'")
+                raise CircularIncludedSection(
+                    f"Circular include detected for section '{name}'"
+                )
             return ""
 
         content = self.cache.get(name)
         if content is None or content == "":
             if self.debug:
-                raise RuntimeError(f"Included section '{name}' not found")
+                raise MissingIncludedSection(f"Included section '{name}' not found")
             return ""
 
         # Use a fresh SectionExpander for nested expansion to avoid feeding while
@@ -119,7 +125,9 @@ class SectionExpander(HTMLParser):
             else:
                 # missing name attr -> treat as missing section
                 if self.debug:
-                    raise RuntimeError("dx-include tag missing 'name' attribute")
+                    raise IncludeTagMissingName(
+                        "dx-include tag missing 'name' attribute"
+                    )
                 # else skip silently
             return
 
@@ -142,7 +150,9 @@ class SectionExpander(HTMLParser):
                 self.parts.append(self._expand_section(inc_name))
             else:
                 if self.debug:
-                    raise RuntimeError("dx-include tag missing 'name' attribute")
+                    raise IncludeTagMissingName(
+                        "dx-include tag missing 'name' attribute"
+                    )
             return
 
         attrs_str = " " + " ".join(f'{k}="{v}"' for k, v in attrs) if attrs else ""
