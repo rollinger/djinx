@@ -7,6 +7,100 @@ from djxi.error import (
 )
 
 
+def parse_tag_attributes(attr_text: str):
+    """
+    Parse attributes from inside a start-tag string (text after the tag name).
+    Returns a list of tuples: (name, value, quote_char) where value is None for
+    boolean attrs, and quote_char is the outer quote used ('"' or "'"), or None
+    if the value was unquoted.
+    This is a small stateful tokenizer that avoids the HTMLParser's attr-splitting
+    problems when attribute values contain nested quotes (e.g. Django tags).
+    """
+    i = 0
+    n = len(attr_text)
+    attrs = []
+    while i < n:
+        # skip whitespace
+        while i < n and attr_text[i].isspace():
+            i += 1
+        if i >= n:
+            break
+
+        # read attribute name (allow letters, digits, -, :, _)
+        start = i
+        while i < n and (attr_text[i].isalnum() or attr_text[i] in "_-:"):
+            i += 1
+        name = attr_text[start:i]
+        if not name:
+            # stray character - skip it
+            i += 1
+            continue
+
+        # skip whitespace
+        while i < n and attr_text[i].isspace():
+            i += 1
+
+        value = None
+        quote_char = None
+        # if equals sign, parse value
+        if i < n and attr_text[i] == "=":
+            i += 1
+            # skip whitespace after =
+            while i < n and attr_text[i].isspace():
+                i += 1
+            if i < n and attr_text[i] in ('"', "'"):
+                quote_char = attr_text[i]
+                i += 1
+                start_val = i
+                # find matching outer quote; do not treat different inner quotes as terminator
+                while i < n:
+                    if attr_text[i] == quote_char:
+                        break
+                    i += 1
+                value = attr_text[start_val:i]
+                # advance past closing quote if present
+                if i < n and attr_text[i] == quote_char:
+                    i += 1
+            else:
+                # unquoted value: take until whitespace
+                start_val = i
+                while i < n and not attr_text[i].isspace():
+                    i += 1
+                value = attr_text[start_val:i]
+        else:
+            # boolean attribute (no value)
+            value = None
+            quote_char = None
+
+        attrs.append((name, value, quote_char))
+    return attrs
+
+
+def attrs_to_string(attrs):
+    """
+    Reconstruct attribute string from list returned by parse_tag_attributes.
+    Uses the original quote_char when available; otherwise prefers single quotes.
+    """
+    parts = []
+    for name, value, quote_char in attrs:
+        if value is None:
+            parts.append(name)
+        else:
+            q = quote_char or "'"
+            # if original quote is not available and q appears inside value, switch to the other quote
+            if quote_char is None:
+                if "'" in value and '"' not in value:
+                    q = '"'
+                elif "'" in value and '"' in value:
+                    # both quotes present: escape double quotes for safety
+                    q = '"'
+                    val = value.replace('"', "&quot;")
+                    parts.append(f"{name}={q}{val}{q}")
+                    continue
+            parts.append(f"{name}={q}{value}{q}")
+    return " ".join(parts)
+
+
 class SectionParser(HTMLParser):
     remainder_section_name = "re__main__der"
 
@@ -18,9 +112,21 @@ class SectionParser(HTMLParser):
         self._inside = False
         self._chunks = []
 
+    def _parse_attrs_from_starttag(self, tag: str):
+        st = self.get_starttag_text() or ""
+        prefix = f"<{tag}"
+        inner = ""
+        if st.startswith(prefix):
+            inner = st[len(prefix) :].rstrip(">").strip()
+            # strip trailing slash for self-closing like "<tag .../>"
+            if inner.endswith("/"):
+                inner = inner[:-1].rstrip()
+        return parse_tag_attributes(inner)
+
     def handle_starttag(self, tag, attrs):
         if tag == self.section_tag:
-            attrs_dict = dict(attrs)
+            parsed = self._parse_attrs_from_starttag(tag)
+            attrs_dict = {k: v for k, v, _ in parsed}
             name = attrs_dict.get("name")
             if name:
                 self._current_name = name
@@ -28,7 +134,8 @@ class SectionParser(HTMLParser):
                 self._chunks = []
             return
 
-        attrs_str = " " + " ".join(f'{k}="{v}"' for k, v in attrs) if attrs else ""
+        parsed = self._parse_attrs_from_starttag(tag)
+        attrs_str = (" " + attrs_to_string(parsed)) if parsed else ""
         if self._inside:
             self._chunks.append(f"<{tag}{attrs_str}>")
         else:
@@ -54,7 +161,16 @@ class SectionParser(HTMLParser):
             self.sections[self.remainder_section_name] += data
 
     def handle_startendtag(self, tag, attrs):
-        attrs_str = " " + " ".join(f'{k}="{v}"' for k, v in attrs) if attrs else ""
+        parsed = self._parse_attrs_from_starttag(tag)
+        attrs_str = (" " + attrs_to_string(parsed)) if parsed else ""
+        if tag == self.section_tag:
+            # treat as section start+end: only record empty or provided name
+            attrs_dict = {k: v for k, v, _ in parsed}
+            name = attrs_dict.get("name")
+            if name:
+                self.sections[name] = ""
+            return
+
         if self._inside:
             self._chunks.append(f"<{tag}{attrs_str}/>")
         else:
@@ -82,6 +198,16 @@ class SectionExpander(HTMLParser):
         self.debug = getattr(_dj_settings, "DEBUG", False)
         self.parts = []
         # stack is local to each expand() invocation; kept for clarity
+
+    def _parse_attrs_from_starttag(self, tag: str):
+        st = self.get_starttag_text() or ""
+        prefix = f"<{tag}"
+        inner = ""
+        if st.startswith(prefix):
+            inner = st[len(prefix) :].rstrip(">").strip()
+            if inner.endswith("/"):
+                inner = inner[:-1].rstrip()
+        return parse_tag_attributes(inner)
 
     def expand(self, s: str, stack=None) -> str:
         """Expand includes in string s. `stack` is a list of section names
@@ -117,8 +243,9 @@ class SectionExpander(HTMLParser):
         return exp.expand(content, stack=self._current_stack + [name])
 
     def handle_starttag(self, tag, attrs):
+        parsed = self._parse_attrs_from_starttag(tag)
+        attrs_dict = {k: v for k, v, _ in parsed}
         if tag == self.include_tag:
-            attrs_dict = dict(attrs)
             inc_name = attrs_dict.get("name")
             if inc_name:
                 self.parts.append(self._expand_section(inc_name))
@@ -131,7 +258,7 @@ class SectionExpander(HTMLParser):
                 # else skip silently
             return
 
-        attrs_str = " " + " ".join(f'{k}="{v}"' for k, v in attrs) if attrs else ""
+        attrs_str = (" " + attrs_to_string(parsed)) if parsed else ""
         self.parts.append(f"<{tag}{attrs_str}>")
 
     def handle_endtag(self, tag):
@@ -143,8 +270,9 @@ class SectionExpander(HTMLParser):
         self.parts.append(data)
 
     def handle_startendtag(self, tag, attrs):
+        parsed = self._parse_attrs_from_starttag(tag)
+        attrs_dict = {k: v for k, v, _ in parsed}
         if tag == self.include_tag:
-            attrs_dict = dict(attrs)
             inc_name = attrs_dict.get("name")
             if inc_name:
                 self.parts.append(self._expand_section(inc_name))
@@ -155,5 +283,5 @@ class SectionExpander(HTMLParser):
                     )
             return
 
-        attrs_str = " " + " ".join(f'{k}="{v}"' for k, v in attrs) if attrs else ""
+        attrs_str = (" " + attrs_to_string(parsed)) if parsed else ""
         self.parts.append(f"<{tag}{attrs_str}/>")
